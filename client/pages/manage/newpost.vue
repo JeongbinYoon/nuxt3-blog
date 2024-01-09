@@ -1,8 +1,13 @@
 <script setup>
-const content = ref("");
+const content = ref('');
 
-const onSubmit = () => {
-  $fetch("/api/posts/post");
+const onSubmit = async () => {
+  const params = {
+    title: '타이틀',
+    content: content.value,
+  };
+
+  await useFetchApi('/api/posts/post', 'post', params);
 };
 </script>
 

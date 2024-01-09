@@ -1,5 +1,5 @@
 <script setup>
-$fetch("/api/");
+const { data, error } = await useFetch('/api/');
 </script>
 
 <template>
