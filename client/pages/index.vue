@@ -1,6 +1,4 @@
-<script setup>
-const { data, error } = await useFetch('/api/');
-</script>
+<script setup></script>
 
 <template>
   <p>main</p>

@@ -2,12 +2,7 @@
 const content = ref('');
 
 const onSubmit = async () => {
-  const params = {
-    title: '타이틀',
-    content: content.value,
-  };
-
-  await useFetchApi('/api/posts/post', 'post', params);
+  await useFetchApi('/api/posts/post', 'get');
 };
 </script>
 

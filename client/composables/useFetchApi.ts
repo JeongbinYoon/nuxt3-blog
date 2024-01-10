@@ -1,6 +1,6 @@
 export default async function useFetchApi(
   url: string,
-  method: string,
+  method: any,
   params: Object
 ) {
   return await useFetch(url, {
