@@ -1,14 +1,28 @@
-export default defineEventHandler((e) => {
-  const mysql = e.context.mysql;
-  const sql = 'select * from posts';
-  mysql.query(sql, function (err, rows, fields) {
-    if (err) {
-      console.error('error connecting: ' + err.stack);
-    }
-    console.log(rows);
-  });
+import getMySQLConnection from '~/server/db/index';
 
-  return {
-    status: 'GET',
-  };
+export default defineEventHandler(async (e) => {
+  try {
+    // 연결 풀에서 연결 가져오기
+    const connection = await getMySQLConnection();
+    const sql = 'SELECT * FROM author';
+
+    const [rows, fields] = await connection.execute(sql);
+    console.log('Query result:', rows);
+    // console.log("Query result:", fields);
+
+    // 연결 반환
+    connection.release();
+
+    return {
+      result: rows,
+      status: 'ok',
+    };
+  } catch (error) {
+    console.error(error);
+
+    return {
+      result: [],
+      status: 'bad',
+    };
+  }
 });
