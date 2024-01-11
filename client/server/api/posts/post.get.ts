@@ -4,11 +4,13 @@ export default defineEventHandler(async (e) => {
   try {
     // 연결 풀에서 연결 가져오기
     const connection = await getMySQLConnection();
-    const sql = 'SELECT * FROM author';
+    const sql = `
+        SELECT posts.id as post_id,title,content,name,created 
+        FROM posts
+        LEFT JOIN authors ON posts.author = authors.id;
+      `;
 
     const [rows, fields] = await connection.execute(sql);
-    console.log('Query result:', rows);
-    // console.log("Query result:", fields);
 
     // 연결 반환
     connection.release();
@@ -19,7 +21,6 @@ export default defineEventHandler(async (e) => {
     };
   } catch (error) {
     console.error(error);
-
     return {
       result: [],
       status: 'bad',

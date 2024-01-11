@@ -3,8 +3,11 @@ export default async function useFetchApi(
   method: any,
   params: Object
 ) {
-  return await useFetch(url, {
+  const { data, error, status } = await useFetch(url, {
     method,
     params,
   });
+
+  if (status.value === 'success') return data.value;
+  else return error;
 }
