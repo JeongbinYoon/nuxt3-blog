@@ -8,7 +8,9 @@ const { res } = await useFetchApi('/api/categories', 'get');
         <p class="parent">{{ parent.name }}</p>
         <ul>
           <li v-for="child in parent.list">
-            <NuxtLink to="/" class="child">{{ child.name }}</NuxtLink>
+            <NuxtLink :to="`/category/${child.categoryId}`" class="child">{{
+              child.name
+            }}</NuxtLink>
           </li>
         </ul>
       </li>

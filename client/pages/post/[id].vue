@@ -1,6 +1,6 @@
 <script setup>
 const route = useRoute();
-const { res } = await useFetchApi('/api/posts/post', 'get', {
+const { res } = await useFetchApi('/api/post', 'get', {
   id: route.params.id,
 });
 

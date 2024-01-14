@@ -3,7 +3,7 @@ const content = ref('');
 const posts = ref('');
 
 const onSubmit = async () => {
-  posts.value = await useFetchApi('/api/posts/post', 'get');
+  posts.value = await useFetchApi('/api/post', 'get');
 };
 </script>
 

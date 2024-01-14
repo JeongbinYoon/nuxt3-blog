@@ -1,5 +1,5 @@
 <script setup>
-const data = await useFetchApi('/api/posts', 'get');
+const data = await useFetchApi('/api/post', 'get');
 const categories = await useFetchApi('/api/categories', 'get');
 </script>
 
