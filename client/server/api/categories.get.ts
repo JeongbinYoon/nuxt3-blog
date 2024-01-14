@@ -1,30 +1,61 @@
-import getMySQLConnection from "../db";
+import { RowDataPacket } from 'mysql2';
+import getMySQLConnection from '../db';
 
 export default defineEventHandler(async () => {
+  interface Category extends RowDataPacket {
+    categoryId: number;
+    name: string;
+    parentId?: number;
+  }
+  interface parentCategory extends Category {
+    list: Category[];
+  }
+
   try {
     // 연결 풀에서 연결 가져오기
     const connection = await getMySQLConnection();
+
+    // 하위 카테고리
     const sql = `
-            SELECT child_categories.id as categoryId,child_categories.name, parent_categories.id as parentId, parent_categories.name as parentName 
-            FROM child_categories 
-            LEFT JOIN parent_categories 
+            SELECT child_categories.id as categoryId,child_categories.name, parent_categories.id as parentId
+            FROM child_categories
+            LEFT JOIN parent_categories
             ON parent_id=parent_categories.id;
           `;
 
-    const [rows, fields] = await connection.execute(sql);
+    // 상위 카테고리
+    const sql2 = `
+              SELECT *
+              FROM parent_categories;
+            `;
+
+    const [child] = await connection.execute<Category[]>(sql);
+    const [parents] = await connection.execute<parentCategory[]>(sql2);
+    console.log(child);
+
+    parents.map((parent) => (parent.list = []));
+
+    // parentId를 기준으로 그룹화
+    const groupedByParentId = child.reduce((result, item) => {
+      const parentId = item.parentId;
+
+      result.find((parent) => parent.id === parentId)?.list.push(item);
+
+      return result;
+    }, parents as parentCategory[]);
 
     // 연결 반환
     connection.release();
 
     return {
-      result: rows,
-      status: "ok",
+      res: groupedByParentId,
+      status: 'ok',
     };
   } catch (error) {
     console.error(error);
     return {
-      result: [],
-      status: "bad",
+      res: [],
+      status: 'bad',
     };
   }
 });

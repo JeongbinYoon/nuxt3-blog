@@ -1,6 +1,9 @@
 <template>
   <div>
     <Header />
-    <slot />
+    <div class="flex">
+      <Category />
+      <slot />
+    </div>
   </div>
 </template>
