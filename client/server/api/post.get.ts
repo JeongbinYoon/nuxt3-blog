@@ -7,7 +7,7 @@ export default defineEventHandler(async (e) => {
     // 연결 풀에서 연결 가져오기
     const connection = await getMySQLConnection();
     const sql = `
-        SELECT posts.id as posts_id,title,content,account,name,created 
+        SELECT posts.id as post_id,title,content,account,name,created 
         FROM posts 
         LEFT JOIN user 
         ON posts.author=user.id
