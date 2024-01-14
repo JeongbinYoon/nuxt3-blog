@@ -5,7 +5,4 @@ const categories = await useFetchApi('/api/categories', 'get');
 
 <template>
   <p>main</p>
-  <nuxt-link to="/manage/newpost/">newpost</nuxt-link>
-  {{ data }}
-  {{ categories }}
 </template>

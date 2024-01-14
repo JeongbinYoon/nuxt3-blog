@@ -1,16 +1,17 @@
 <script setup>
-// const { res } = await useFetchApi('/api/categories', 'get');
-
-const click = async () => {
-  const { res } = await useFetchApi('/api/categories', 'get');
-};
+const { res } = await useFetchApi('/api/categories', 'get');
 </script>
 <template>
   <div id="category">
-    {{ res }}
-    <button @click="click">sd</button>
     <ul>
-      <li>s</li>
+      <li v-for="parent in res">
+        <p class="parent">{{ parent.name }}</p>
+        <ul>
+          <li v-for="child in parent.list">
+            <NuxtLink to="/" class="child">{{ child.name }}</NuxtLink>
+          </li>
+        </ul>
+      </li>
     </ul>
   </div>
 </template>

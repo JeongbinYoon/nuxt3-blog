@@ -1,13 +1,31 @@
 @import '~/assets/css/variables.scss';
 @import '~/assets/css/header.scss';
-@import '~/assets/css/category.scss';
+@import '~/assets/css/sidebar.scss';
 @import '~/assets/css/content.scss';
 html,
 body {
   margin: 0;
   padding: 0;
 }
+p {
+  margin: 0;
+}
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 
 .max-container {
   width: $container-max-width;
+}
+
+.content-container {
+  width: $content-width;
 }

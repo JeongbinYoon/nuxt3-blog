@@ -1,9 +1,11 @@
 <template>
   <div>
     <Header />
-    <div class="flex">
-      <Category />
-      <slot />
+    <div class="flex justify-c">
+      <Sidebar />
+      <div class="content-container">
+        <slot />
+      </div>
     </div>
   </div>
 </template>

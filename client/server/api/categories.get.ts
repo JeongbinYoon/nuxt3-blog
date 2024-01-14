@@ -31,7 +31,6 @@ export default defineEventHandler(async () => {
 
     const [child] = await connection.execute<Category[]>(sql);
     const [parents] = await connection.execute<parentCategory[]>(sql2);
-    console.log(child);
 
     parents.map((parent) => (parent.list = []));
 

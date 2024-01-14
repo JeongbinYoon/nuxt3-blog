@@ -1,0 +1,27 @@
+#sidebar {
+  width: $sidebar-width;
+  min-height: calc(100vh - $header-height);
+  .sidebar-content {
+    position: sticky;
+    top: calc(100px + $header-height);
+
+    #category {
+      > ul > li {
+        margin-bottom: 10px;
+        .parent {
+          padding: 5px 0;
+          font-size: 14px;
+        }
+      }
+      > ul > li > ul {
+        border-left: 1px solid #eee;
+        .child {
+          display: inline-block;
+          padding: 5px 0;
+          font-size: 13px;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}
