@@ -6,6 +6,9 @@
       <div>
         <button>search</button>
         <button>theme</button>
+        <button>
+          <NuxtLink to="/write"> 새 글 작성 </NuxtLink>
+        </button>
       </div>
     </div>
   </div>
