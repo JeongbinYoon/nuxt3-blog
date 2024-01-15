@@ -4,6 +4,9 @@ const { res } = await useFetchApi('/api/categories', 'get');
 <template>
   <div id="category">
     <ul>
+      <li>
+        <NuxtLink to="/category/all">전체 글 보기</NuxtLink>
+      </li>
       <li v-for="parent in res">
         <p class="parent">{{ parent.name }}</p>
         <ul>
