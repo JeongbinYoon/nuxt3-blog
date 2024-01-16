@@ -1,9 +1,12 @@
 <script setup>
+definePageMeta({
+  layout: 'write',
+});
 import Editor from '~/components/editor';
 const content = ref();
 const title = ref('');
 
-const submit = async () => {
+const submit = async (e) => {
   const params = {
     title: title.value,
     content: content.value,
@@ -15,13 +18,23 @@ const submit = async () => {
 </script>
 
 <template>
-  <div>
-    <ClientOnly>
-      <input v-model="title" />
-      <Editor v-model="content" />
-    </ClientOnly>
-    <div>content is:{{ content }}</div>
+  <div id="write">
+    <div class="content-container">
+      <ClientOnly>
+        <textarea
+          class="title-input"
+          v-model="title"
+          placeholder="제목을 입력하세요"
+          autofocus
+          required
+        ></textarea>
+        <Editor v-model="content" />
+      </ClientOnly>
 
-    <button @click="submit">save</button>
+      <div class="btn-group">
+        <button @submit="submit" class="btn btn-white">임시저장</button>
+        <button @submit="submit" class="btn btn-primary">게시하기</button>
+      </div>
+    </div>
   </div>
 </template>

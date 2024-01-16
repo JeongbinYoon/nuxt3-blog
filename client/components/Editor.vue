@@ -5,10 +5,6 @@
       :config="editorConfig"
       v-model="editorHtml"
     />
-    <div>
-      Content is:
-      <div v-html="editorHtml"></div>
-    </div>
   </div>
 </template>
 <script setup>

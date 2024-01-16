@@ -1,3 +1,4 @@
+@import '~/assets/css/variables.scss';
 .flex {
   display: flex;
 }
@@ -11,4 +12,43 @@
 
 .align-c {
   align-items: center;
+}
+
+// btn
+.btn {
+  height: 40px;
+  padding: 0 20px;
+  font-size: $font-size-medium;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+  &:hover {
+    cursor: pointer;
+  }
+  &.btn-primary {
+    box-shadow: 1px 3px 6px #f2f2f2;
+    color: #fff;
+    background-color: $color-primary;
+    &:hover {
+      background-color: $color-primary-dark;
+    }
+  }
+  &.btn-white {
+    box-shadow: 1px 3px 6px #f2f2f2;
+    color: $color-primary;
+    background-color: #fff;
+    &:hover {
+      background-color: $color-gray-100;
+    }
+  }
+}
+
+// container
+.max-container {
+  width: $container-max-width;
+}
+
+.content-container {
+  width: $content-width;
+  padding-top: $content-padding-top;
 }

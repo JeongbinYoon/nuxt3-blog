@@ -2,6 +2,8 @@
 @import '~/assets/css/header.scss';
 @import '~/assets/css/sidebar.scss';
 @import '~/assets/css/content.scss';
+@import '~/assets/css/write.scss';
+@import '~/assets/css/common.scss';
 html,
 body {
   margin: 0;
@@ -26,13 +28,4 @@ ol {
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.max-container {
-  width: $container-max-width;
-}
-
-.content-container {
-  width: $content-width;
-  padding-top: 50px;
 }
