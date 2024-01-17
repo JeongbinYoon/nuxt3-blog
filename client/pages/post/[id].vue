@@ -1,5 +1,6 @@
 <script setup>
 const route = useRoute();
+const router = useRouter();
 const { res } = await useFetchApi('/api/post', 'get', {
   id: route.params.id,
 });
@@ -11,7 +12,12 @@ created.value.time = res.created.split('T')[1].split('.')[0];
 const deletePost = async () => {
   const answer = confirm('삭제하시겠습니까?');
   if (answer) {
-    await useFetchApi('/api/post', 'delete', { id: route.params.id });
+    const { status } = await useFetchApi('/api/post', 'delete', {
+      id: route.params.id,
+    });
+    if (status === 'ok') {
+      router.push('/');
+    }
   }
 };
 </script>

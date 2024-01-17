@@ -1,4 +1,4 @@
-import { RowDataPacket } from 'mysql2';
+import { ResultSetHeader } from 'mysql2';
 import getMySQLConnection from '~/server/db/index';
 
 export default defineEventHandler(async (e) => {
@@ -17,17 +17,21 @@ export default defineEventHandler(async (e) => {
             VALUES ('${title}', '${content}', '${author}', '${category}' ,NOW());
       `;
 
-    await connection.execute(sql);
-
+    const [data] = await connection.execute<ResultSetHeader>(sql);
+    console.log(data.insertId);
     // 연결 반환
     connection.release();
 
     return {
+      res: {
+        postId: data.insertId,
+      },
       status: 'ok',
     };
   } catch (error) {
     console.error(error);
     return {
+      res: {},
       status: 'bad',
     };
   }

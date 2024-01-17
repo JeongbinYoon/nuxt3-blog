@@ -15,7 +15,7 @@ const getCreatedAt = (created) => {
       <NuxtLink :to="`/post/${post.post_id}`" class="title">{{
         post.title
       }}</NuxtLink>
-      <p class="short-content" v-html="post.short_content"></p>
+      <div class="short-content" v-html="post.short_content"></div>
       <div class="post-info">
         <span class="created">{{ getCreatedAt(post.created) }}</span>
         <span class="comment">0개의 댓글</span>
