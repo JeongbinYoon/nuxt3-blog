@@ -9,7 +9,7 @@
 </template>
 <script setup>
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import '@ckeditor/ckeditor5-build-classic/build/translations/ru';
+import '@ckeditor/ckeditor5-build-classic/build/translations/ko';
 
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
