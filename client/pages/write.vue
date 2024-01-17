@@ -4,9 +4,27 @@ definePageMeta({
 });
 import Editor from '~/components/editor';
 
+const route = useRoute();
 const router = useRouter();
-const content = ref();
+
+const isUpdate = ref(false);
 const title = ref('');
+const content = ref();
+
+// 글 수정시 내용 불러오기
+if (route.query?.postId) {
+  isUpdate.value = true;
+  const { res, status } = await useFetchApi('/api/post', 'get', {
+    id: route.query.postId,
+  });
+
+  console.log('res', res);
+  if (status === 'ok') {
+    title.value = res.title;
+    content.value = res.content;
+    console.log('res', res);
+  }
+}
 
 const validate = () => {
   if (!title.value) {
@@ -16,6 +34,7 @@ const validate = () => {
   return true;
 };
 
+// 게시하기
 const submit = async (e) => {
   if (!validate()) return;
 
@@ -32,6 +51,8 @@ const submit = async (e) => {
     router.push(`/post/${res.postId}`);
   }
 };
+
+console.log('isUpdate', isUpdate.value);
 </script>
 
 <template>
@@ -52,7 +73,10 @@ const submit = async (e) => {
 
       <div class="btn-group">
         <button @click="submit" class="btn btn-white">임시저장</button>
-        <button @click="submit" class="btn btn-primary">게시하기</button>
+        <button v-if="isUpdate" @click="submit" class="btn btn-primary">
+          수정하기
+        </button>
+        <button v-else @click="submit" class="btn btn-primary">게시하기</button>
       </div>
     </div>
   </div>

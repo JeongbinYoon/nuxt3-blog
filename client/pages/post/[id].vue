@@ -23,10 +23,17 @@ const deletePost = async () => {
 </script>
 
 <template>
-  <div id="content">
+  <div class="post" id="content">
     <h2 class="title">{{ res.title }}</h2>
-    <span class="created">{{ `${created.date} ${created.time}` }}</span>
+    <div class="flex">
+      <span class="created">{{ `${created.date} ${created.time}` }}</span>
+      <div class="btn-group">
+        <button @click="$router.push(`/write?postId=${route.params.id}`)">
+          수정
+        </button>
+        <button @click="deletePost">삭제</button>
+      </div>
+    </div>
     <div v-html="res.content"></div>
-    <button @click="deletePost">삭제</button>
   </div>
 </template>
