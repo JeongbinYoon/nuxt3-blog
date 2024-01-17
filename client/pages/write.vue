@@ -8,24 +8,24 @@ const route = useRoute();
 const router = useRouter();
 
 const isUpdate = ref(false);
+const postId = ref(route.query?.postId);
 const title = ref('');
 const content = ref();
 
 // 글 수정시 내용 불러오기
-if (route.query?.postId) {
+if (postId.value) {
   isUpdate.value = true;
   const { res, status } = await useFetchApi('/api/post', 'get', {
-    id: route.query.postId,
+    id: postId.value,
   });
 
-  console.log('res', res);
   if (status === 'ok') {
     title.value = res.title;
     content.value = res.content;
-    console.log('res', res);
   }
 }
 
+// validate
 const validate = () => {
   if (!title.value) {
     alert('제목을 입력하세요');
@@ -35,9 +35,11 @@ const validate = () => {
 };
 
 // 게시하기
-const submit = async (e) => {
+const onPublish = async () => {
   if (!validate()) return;
 
+  let httpMethod = isUpdate.value ? 'put' : 'post';
+  const query = isUpdate ? { id: postId.value } : null;
   const params = {
     title: title.value,
     content: content.value,
@@ -45,14 +47,21 @@ const submit = async (e) => {
     category: '8',
   };
 
-  const { res, status } = await useFetchApi('api/post', 'post', {}, params);
+  const { res, status } = await useFetchApi(
+    'api/post',
+    httpMethod,
+    query,
+    params
+  );
+
+  let alertMsg = res.msg;
+  alert(alertMsg);
+
   if (status === 'ok') {
-    alert('새 글이 게시되었습니다.');
-    router.push(`/post/${res.postId}`);
+    let id = isUpdate.value ? postId.value : res.postId;
+    router.push(`/post/${id}`);
   }
 };
-
-console.log('isUpdate', isUpdate.value);
 </script>
 
 <template>
@@ -72,11 +81,10 @@ console.log('isUpdate', isUpdate.value);
       </ClientOnly>
 
       <div class="btn-group">
-        <button @click="submit" class="btn btn-white">임시저장</button>
-        <button v-if="isUpdate" @click="submit" class="btn btn-primary">
-          수정하기
+        <button @click="onTmpStorage" class="btn btn-white">임시저장</button>
+        <button @click="onPublish" class="btn btn-primary">
+          {{ isUpdate ? '수정하기' : '게시하기' }}
         </button>
-        <button v-else @click="submit" class="btn btn-primary">게시하기</button>
       </div>
     </div>
   </div>

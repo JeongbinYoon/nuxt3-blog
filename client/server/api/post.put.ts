@@ -2,30 +2,31 @@ import { ResultSetHeader } from 'mysql2';
 import getMySQLConnection from '~/server/db/index';
 
 export default defineEventHandler(async (e) => {
+  const { id } = getQuery(e);
   const {
     title = '',
     content = '',
     author = '',
     category = '',
   } = await readBody(e);
+
   try {
     // 연결 풀에서 연결 가져오기
     const connection = await getMySQLConnection();
     const sql = `
-            INSERT INTO posts 
-            (title,content,author,category,created) 
-            VALUES ('${title}', '${content}', '${author}', '${category}' ,NOW());
+            UPDATE posts 
+            SET title='${title}', content='${content}', 
+            author='${author}', category='${category}', created=NOW()
+            WHERE posts.id=${id};
       `;
 
-    const [data] = await connection.execute<ResultSetHeader>(sql);
-
+    await connection.execute<ResultSetHeader>(sql);
     // 연결 반환
     connection.release();
 
     return {
       res: {
-        postId: data.insertId,
-        msg: '글이 게시되었습니다.',
+        msg: '수정되었습니다.',
       },
       status: 'ok',
     };
@@ -33,7 +34,7 @@ export default defineEventHandler(async (e) => {
     console.error(error);
     return {
       res: {
-        msg: '게시에 실패하였습니다.',
+        msg: '수정에 실패하였습니다.',
       },
       status: 'bad',
     };

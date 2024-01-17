@@ -2,7 +2,7 @@ import { RowDataPacket } from 'mysql2';
 import getMySQLConnection from '~/server/db/index';
 
 export default defineEventHandler(async (e) => {
-  const id = getQuery(e).id;
+  const { id } = getQuery(e);
   try {
     // 연결 풀에서 연결 가져오기
     const connection = await getMySQLConnection();
