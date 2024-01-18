@@ -4,18 +4,46 @@
   align-items: center;
   width: 100%;
   height: $header-height;
-  padding: 0 30px;
   background: rgb(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   > div {
     height: 100%;
+    padding: 0 30px;
   }
   .logo {
     font-size: 24px;
   }
   .title {
     font-size: 20px;
+  }
+
+  .header-btns {
+    display: flex;
+    align-items: center;
+    button + button {
+      margin-left: 10px;
+    }
+    button {
+      height: 100%;
+      padding: 5px 10px;
+      background: none;
+      font-size: 18px;
+
+      border: none;
+      border-radius: 50%;
+      outline: none;
+      cursor: pointer;
+      &:hover {
+        background-color: $color-gray-200;
+      }
+    }
+
+    .write-btn {
+      display: inline-block;
+      margin-left: 10px;
+      padding: 5px 10px;
+    }
   }
 }
