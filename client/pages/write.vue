@@ -14,7 +14,7 @@ const categories = ref([]);
 const postId = ref(route.query?.postId);
 const title = ref('');
 const content = ref();
-const category = ref();
+const category = ref('');
 
 // 글 수정시 내용 불러오기
 if (postId.value) {
@@ -26,6 +26,7 @@ if (postId.value) {
   if (status === 'ok') {
     title.value = res.title;
     content.value = res.content;
+    category.value = res.category;
   }
 }
 
@@ -49,8 +50,9 @@ const validate = () => {
     alert('제목을 입력하세요.');
     return;
   }
+
   if (!category.value) {
-    alert('카테고리를 입력하세요.');
+    alert('카테고리를 선택하세요.');
     return;
   }
   return true;
@@ -90,6 +92,20 @@ const onPublish = async () => {
   <div id="write">
     <div class="content-container">
       <ClientOnly>
+        <!-- 카테고리 -->
+        <select
+          v-model="category"
+          @change="categoryChange"
+          class="category-select"
+        >
+          <option value="">카테고리 선택</option>
+          <optgroup v-for="group in categories" :label="group.name">
+            <option v-for="category in group.list" :value="category.categoryId">
+              {{ category.name }}
+            </option>
+          </optgroup>
+        </select>
+
         <!-- 제목 -->
         <textarea
           class="title-input"
@@ -99,15 +115,6 @@ const onPublish = async () => {
           required
         ></textarea>
 
-        <!-- 카테고리 -->
-        <select @change="categoryChange" name="categories">
-          <option value="">카테고리 선택</option>
-          <optgroup v-for="group in categories" :label="group.name">
-            <option v-for="category in group.list" :value="category.categoryId">
-              {{ category.name }}
-            </option>
-          </optgroup>
-        </select>
         <!-- 에디터 -->
         <Editor v-model="content" />
       </ClientOnly>
