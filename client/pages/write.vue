@@ -8,9 +8,13 @@ const route = useRoute();
 const router = useRouter();
 
 const isUpdate = ref(false);
+const categories = ref([]);
+
+// 글 정보
 const postId = ref(route.query?.postId);
 const title = ref('');
 const content = ref();
+const category = ref();
 
 // 글 수정시 내용 불러오기
 if (postId.value) {
@@ -25,10 +29,28 @@ if (postId.value) {
   }
 }
 
+// 카테고리 불러오기
+const { res: categoriesData, status: status2 } = await useFetchApi(
+  '/api/categories',
+  'get'
+);
+if (status2 === 'ok') {
+  categories.value = categoriesData;
+}
+
+// 카테고리 선택
+const categoryChange = (e) => {
+  category.value = e.target.value;
+};
+
 // validate
 const validate = () => {
   if (!title.value) {
-    alert('제목을 입력하세요');
+    alert('제목을 입력하세요.');
+    return;
+  }
+  if (!category.value) {
+    alert('카테고리를 입력하세요.');
     return;
   }
   return true;
@@ -44,7 +66,7 @@ const onPublish = async () => {
     title: title.value,
     content: content.value,
     author: '2',
-    category: '8',
+    category: category.value,
   };
 
   const { res, status } = await useFetchApi(
@@ -76,6 +98,16 @@ const onPublish = async () => {
           autofocus
           required
         ></textarea>
+
+        <!-- 카테고리 -->
+        <select @change="categoryChange" name="categories">
+          <option value="">카테고리 선택</option>
+          <optgroup v-for="group in categories" :label="group.name">
+            <option v-for="category in group.list" :value="category.categoryId">
+              {{ category.name }}
+            </option>
+          </optgroup>
+        </select>
         <!-- 에디터 -->
         <Editor v-model="content" />
       </ClientOnly>

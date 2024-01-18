@@ -12,11 +12,15 @@ const changeTheme = () => (theme.value = !theme.value);
       <p class="title">타틀타이틀이타이틀타</p>
       <div class="header-btns">
         <button>
-          <font-awesome-icon icon="magnifying-glass" />
+          <ClientOnly>
+            <font-awesome-icon icon="magnifying-glass" />
+          </ClientOnly>
         </button>
 
         <button v-if="theme" @click="theme = !theme">
-          <font-awesome-icon icon="moon" />
+          <ClientOnly>
+            <font-awesome-icon icon="moon" />
+          </ClientOnly>
         </button>
         <button v-else @click="theme = !theme">
           <font-awesome-icon icon="lightbulb" />
