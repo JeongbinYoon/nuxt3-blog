@@ -21,10 +21,19 @@
   font-size: $font-size-medium;
   border: none;
   border-radius: 5px;
-  background-color: #fff;
+  background: none;
   &:hover {
     cursor: pointer;
   }
+  &.btn-white {
+    box-shadow: 1px 3px 6px #f2f2f2;
+    color: $color-gray-400;
+    background-color: #fff;
+    &:hover {
+      background-color: $color-gray-100;
+    }
+  }
+
   &.btn-primary {
     box-shadow: 1px 3px 6px #f2f2f2;
     color: #fff;
@@ -33,14 +42,16 @@
       background-color: $color-primary-dark;
     }
   }
-  &.btn-white {
-    box-shadow: 1px 3px 6px #f2f2f2;
-    color: $color-primary;
-    background-color: #fff;
-    &:hover {
-      background-color: $color-gray-100;
-    }
-  }
+}
+
+.t-gray {
+  color: #666 !important;
+}
+.t-gray-light {
+  color: #a1a1a1 !important;
+}
+.t-primary {
+  color: $color-primary;
 }
 
 // container

@@ -126,5 +126,7 @@ const onPublish = async () => {
         </button>
       </div>
     </div>
+
+    <Publish />
   </div>
 </template>
