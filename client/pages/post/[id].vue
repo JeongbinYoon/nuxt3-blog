@@ -29,35 +29,27 @@ const deletePost = async () => {
 };
 
 // 글 스크롤 감지
-const postRef = ref();
+const titleRef = ref();
 onMounted(() => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      // intersectionRatio가 0이라는 것은 대상을 볼 수 없다는 것이므로
-      // 아무것도 하지 않음
-      if (entries[0].intersectionRatio <= 0) return;
+  const observer = new IntersectionObserver((entries) => {
+    const titleInfo = {
+      intersecting: false,
+      postTitle: res.title,
+    };
 
-      // 주시 시작
-      const params = {
-        intersecting: false,
-        postTitle: res.title,
-      };
+    if (entries[0].intersectionRatio <= 0) titleInfo.intersecting = true;
+    else titleInfo.intersecting = false;
 
-      if (entries[0].isIntersecting) params.intersecting = true;
-      else params.intersecting = false;
+    $emit('title-intersecting', titleInfo);
+  });
 
-      $emit('post-intersecting', params);
-    },
-    { threshold: 0.1, rootMargin: '115px 0px 0px 0px' }
-  );
-
-  observer.observe(postRef.value);
+  observer.observe(titleRef.value);
 });
 </script>
 
 <template>
-  <div ref="postRef" class="post" id="content">
-    <h2 class="title">{{ res.title }}</h2>
+  <div class="post" id="content">
+    <h2 ref="titleRef" class="title">{{ res.title }}</h2>
     <div class="flex">
       <span class="created">{{ `${created.date} ${created.time}` }}</span>
       <div class="btn-group">

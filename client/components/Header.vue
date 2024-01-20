@@ -1,10 +1,11 @@
 <script setup>
 const { $listen } = useNuxtApp();
+const route = useRoute();
 
 const theme = ref(true);
-const postIntersecInfo = ref({});
+const titleInfo = ref({});
 
-$listen('post-intersecting', (v) => (postIntersecInfo.value = v));
+$listen('title-intersecting', (v) => (titleInfo.value = v));
 </script>
 
 <template>
@@ -13,9 +14,14 @@ $listen('post-intersecting', (v) => (postIntersecInfo.value = v));
       <h1 class="logo">
         <NuxtLink to="/">blog</NuxtLink>
       </h1>
-      <p v-if="postIntersecInfo.intersecting" class="title">
-        {{ postIntersecInfo.postTitle }}
+
+      <p
+        v-if="titleInfo.intersecting && route.name === 'post-id'"
+        class="title"
+      >
+        {{ titleInfo.postTitle }}
       </p>
+
       <div class="header-btns">
         <button>
           <ClientOnly>
