@@ -32,14 +32,21 @@ const deletePost = async () => {
 const postRef = ref();
 onMounted(() => {
   const observer = new IntersectionObserver(
-    function (entries) {
+    (entries) => {
       // intersectionRatio가 0이라는 것은 대상을 볼 수 없다는 것이므로
       // 아무것도 하지 않음
       if (entries[0].intersectionRatio <= 0) return;
 
       // 주시 시작
-      if (entries[0].isIntersecting) $emit('post-intersecting', true);
-      else $emit('post-intersecting', false);
+      const params = {
+        intersecting: false,
+        postTitle: res.title,
+      };
+
+      if (entries[0].isIntersecting) params.intersecting = true;
+      else params.intersecting = false;
+
+      $emit('post-intersecting', params);
     },
     { threshold: 0.1, rootMargin: '115px 0px 0px 0px' }
   );

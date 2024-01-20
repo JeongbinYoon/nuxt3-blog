@@ -1,17 +1,21 @@
 <script setup>
-const theme = ref(true);
 const { $listen } = useNuxtApp();
 
-$listen('post-intersecting', (v) => console.log(v));
+const theme = ref(true);
+const postIntersecInfo = ref({});
+
+$listen('post-intersecting', (v) => (postIntersecInfo.value = v));
 </script>
 
 <template>
   <div id="header">
-    <div class="max-container flex justify-sb align-c">
+    <div class="max-container">
       <h1 class="logo">
         <NuxtLink to="/">blog</NuxtLink>
       </h1>
-      <p class="title">타틀타이틀이타이틀타</p>
+      <p v-if="postIntersecInfo.intersecting" class="title">
+        {{ postIntersecInfo.postTitle }}
+      </p>
       <div class="header-btns">
         <button>
           <ClientOnly>

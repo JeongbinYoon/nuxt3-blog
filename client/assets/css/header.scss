@@ -9,14 +9,21 @@
   position: sticky;
   top: 0;
   > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     height: 100%;
     padding: 0 30px;
+    position: relative;
   }
   .logo {
     font-size: 24px;
   }
   .title {
     font-size: 20px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .header-btns {
