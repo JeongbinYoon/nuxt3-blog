@@ -37,3 +37,7 @@ $listen('post-intersecting', (v) => (postIntersecInfo.value = v));
     </div>
   </div>
 </template>
+
+<style scoped>
+@import '~/assets/css/reset.scss';
+</style>

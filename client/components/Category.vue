@@ -20,3 +20,7 @@ const { res } = await useFetchApi('/api/categories', 'get');
     </ul>
   </div>
 </template>
+
+<style scoped>
+@import '~/assets/css/reset.scss';
+</style>

@@ -67,6 +67,6 @@ onMounted(() => {
         <button @click="deletePost">삭제</button>
       </div>
     </div>
-    <div v-html="res.content"></div>
+    <div class="ck-content" v-html="res.content"></div>
   </div>
 </template>

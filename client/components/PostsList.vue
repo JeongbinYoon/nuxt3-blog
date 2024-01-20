@@ -25,6 +25,8 @@ const getCreatedAt = (created) => {
 </template>
 
 <style scoped>
+@import '~/assets/css/reset.scss';
+
 .post {
   padding: 40px 0;
 }
