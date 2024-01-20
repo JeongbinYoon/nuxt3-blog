@@ -1,6 +1,8 @@
 <script setup>
 const theme = ref(true);
-const changeTheme = () => (theme.value = !theme.value);
+const { $listen } = useNuxtApp();
+
+$listen('post-intersecting', (v) => console.log(v));
 </script>
 
 <template>
