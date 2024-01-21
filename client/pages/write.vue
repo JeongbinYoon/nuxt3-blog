@@ -16,6 +16,7 @@ const postInfo = ref({
   postId: useRoute().query?.postId,
   title: '',
   contents: '',
+  preview: '',
   category: '',
 });
 
@@ -29,6 +30,7 @@ if (postInfo.value.postId) {
   if (status === 'ok') {
     postInfo.value.title = res.title;
     postInfo.value.contents = res.contents;
+    postInfo.value.preview = res.preview;
     postInfo.value.category = res.category;
   }
 }

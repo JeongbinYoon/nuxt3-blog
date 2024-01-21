@@ -10,7 +10,7 @@ export default defineEventHandler(async (e) => {
       sql_where = ` WHERE category=${categoryId};`;
     }
     let sql = `
-        SELECT posts.id as post_id,title,LEFT(contents,450) as short_contents,account,name,category,created 
+        SELECT posts.id as post_id, title, preview, account, name, category, created 
         FROM posts 
         LEFT JOIN user 
         ON posts.author=user.id

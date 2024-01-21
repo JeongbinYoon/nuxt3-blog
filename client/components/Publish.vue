@@ -13,13 +13,16 @@ const props = defineProps({
 const router = useRouter();
 
 const isPublic = ref(true);
+const preview = ref(props.postInfo.preview || '');
 
+// 게시하기
 const onPublish = async () => {
   let httpMethod = props.postInfo.isUpdate ? 'put' : 'post';
   const query = { id: props.postInfo.isUpdate ? props.postInfo.postId : null };
   const params = {
     title: props.postInfo.title,
     contents: props.postInfo.contents,
+    preview,
     author: '2',
     category: props.postInfo.category,
   };
@@ -75,7 +78,11 @@ const onPublish = async () => {
 
       <div>
         <p class="title">{{ postInfo.title }}</p>
-        <textarea class="short-contents"></textarea>
+        <textarea
+          v-model="preview"
+          class="preview"
+          placeholder="짧은 소개를 작성해보세요."
+        ></textarea>
       </div>
 
       <div>
@@ -138,7 +145,7 @@ const onPublish = async () => {
       }
     }
 
-    .short-contents {
+    .preview {
       width: 100%;
       min-width: 100%;
       max-width: 100%;
