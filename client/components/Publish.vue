@@ -1,27 +1,66 @@
-<script setup>
+<script lang="ts" setup>
+const props = defineProps({
+  popVisible: {
+    type: Object,
+    default: () => {},
+  },
+  postInfo: {
+    type: Object,
+    default: () => {},
+  },
+});
+
+const router = useRouter();
+
 const isPublic = ref(true);
+
+const onPublish = async () => {
+  let httpMethod = props.postInfo.isUpdate ? 'put' : 'post';
+  const query = { id: props.postInfo.isUpdate ? props.postInfo.postId : null };
+  const params = {
+    title: props.postInfo.title,
+    content: props.postInfo.content,
+    author: '2',
+    category: props.postInfo.category,
+  };
+
+  const { res, status } = await useFetchApi(
+    'api/post',
+    httpMethod,
+    query,
+    params
+  );
+
+  let alertMsg = res.msg;
+  alert(alertMsg);
+
+  if (status === 'ok') {
+    let id = props.postInfo.isUpdate ? props.postInfo.postId : res.postId;
+    router.push(`/post/${id}`);
+  }
+};
 </script>
 
 <template>
-  <div id="publish">
+  <div v-if="popVisible.visible" id="publish">
     <div class="content">
       <div>
         <p>공개설정</p>
         <div class="btn-group">
           <button
-            :class="{ 'btn-primary': isPublic }"
+            :class="{ 'btn-border-primary': isPublic }"
             class="btn btn-white"
             @click="isPublic = true"
           >
-            <font-awesome-icon icon="lock" />
+            <font-awesome-icon icon="earth-asia" />
             공개
           </button>
           <button
-            :class="{ 'btn-primary': !isPublic }"
+            :class="{ 'btn-border-primary': !isPublic }"
             class="btn btn-white"
             @click="isPublic = false"
           >
-            <font-awesome-icon icon="earth-asia" />
+            <font-awesome-icon icon="lock" />
             비공개
           </button>
         </div>
@@ -40,8 +79,10 @@ const isPublic = ref(true);
       </div>
 
       <div>
-        <button class="btn">취소</button>
-        <button class="btn btn-primary">게시하기</button>
+        <button class="btn" @click="popVisible.visible = false">취소</button>
+        <button class="btn btn-primary" @click="onPublish">
+          {{ postInfo.isUpdate ? '수정하기' : '게시하기' }}
+        </button>
       </div>
     </div>
   </div>
@@ -52,13 +93,15 @@ const isPublic = ref(true);
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100vh;
-  background-color: #f4f4f4;
+  width: 900px;
+  padding: 50px 0;
+  background-color: #f7f8f9;
   position: fixed;
-  top: 0;
-  left: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 10;
+  box-shadow: 0px 3px 10px #cdcdcd;
   .content {
     display: flex;
     flex-direction: column;
