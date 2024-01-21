@@ -4,7 +4,7 @@ import getMySQLConnection from '~/server/db/index';
 export default defineEventHandler(async (e) => {
   const {
     title = '',
-    content = '',
+    contents = '',
     author = '',
     category = '',
   } = await readBody(e);
@@ -13,8 +13,8 @@ export default defineEventHandler(async (e) => {
     const connection = await getMySQLConnection();
     const sql = `
             INSERT INTO posts 
-            (title,content,author,category,created) 
-            VALUES ('${title}', '${content}', '${author}', '${category}' ,NOW());
+            (title, contents, author, category, created) 
+            VALUES ('${title}', '${contents}', '${author}', '${category}' ,NOW());
       `;
 
     const [data] = await connection.execute<ResultSetHeader>(sql);

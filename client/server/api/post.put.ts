@@ -5,7 +5,7 @@ export default defineEventHandler(async (e) => {
   const { id } = getQuery(e);
   const {
     title = '',
-    content = '',
+    contents = '',
     author = '',
     category = '',
   } = await readBody(e);
@@ -15,7 +15,7 @@ export default defineEventHandler(async (e) => {
     const connection = await getMySQLConnection();
     const sql = `
             UPDATE posts 
-            SET title='${title}', content='${content}', 
+            SET title='${title}', contents='${contents}', 
             author='${author}', category='${category}', created=NOW()
             WHERE posts.id=${id};
       `;

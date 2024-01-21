@@ -6,12 +6,14 @@ export default defineEventHandler(async (e) => {
   try {
     // 연결 풀에서 연결 가져오기
     const connection = await getMySQLConnection();
+
+    const sql_where = `WHERE posts.id=${id};`;
     const sql = `
-        SELECT posts.id as post_id, title, category, content, account, name, created 
+        SELECT posts.id as post_id, title, category, contents, account, name, created 
         FROM posts 
         LEFT JOIN user 
         ON posts.author=user.id
-        WHERE posts.id=${id};
+        ${sql_where ? sql_where : ';'}
       `;
 
     const [rows] = await connection.execute(sql);

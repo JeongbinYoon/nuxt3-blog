@@ -15,7 +15,7 @@ const postInfo = ref({
   isUpdate: false,
   postId: useRoute().query?.postId,
   title: '',
-  content: '',
+  contents: '',
   category: '',
 });
 
@@ -28,7 +28,7 @@ if (postInfo.value.postId) {
 
   if (status === 'ok') {
     postInfo.value.title = res.title;
-    postInfo.value.content = res.content;
+    postInfo.value.contents = res.contents;
     postInfo.value.category = res.category;
   }
 }
@@ -97,7 +97,7 @@ const onComplete = () => {
         ></textarea>
 
         <!-- 에디터 -->
-        <Editor v-model="postInfo.content" />
+        <Editor v-model="postInfo.contents" />
       </ClientOnly>
 
       <div class="btn-group">

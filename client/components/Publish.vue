@@ -19,7 +19,7 @@ const onPublish = async () => {
   const query = { id: props.postInfo.isUpdate ? props.postInfo.postId : null };
   const params = {
     title: props.postInfo.title,
-    content: props.postInfo.content,
+    contents: props.postInfo.contents,
     author: '2',
     category: props.postInfo.category,
   };
@@ -74,8 +74,8 @@ const onPublish = async () => {
       </div>
 
       <div>
-        <p class="title">asd</p>
-        <textarea class="short-content"></textarea>
+        <p class="title">{{ postInfo.title }}</p>
+        <textarea class="short-contents"></textarea>
       </div>
 
       <div>
@@ -138,7 +138,7 @@ const onPublish = async () => {
       }
     }
 
-    .short-content {
+    .short-contents {
       width: 100%;
       min-width: 100%;
       max-width: 100%;
