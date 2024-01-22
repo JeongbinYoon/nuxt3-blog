@@ -3,64 +3,72 @@ definePageMeta({
   layout: 'manage',
 });
 
-const { res } = await useFetchApi('/api/categories', 'get');
+const categories = ref([]);
+const newGroupName = ref('');
+const addInput = ref(false);
 
-const categoryGroup = ref({
-  parentId: '',
-  categoryId: '',
-});
+const getCategories = async () => {
+  const { res } = await useFetchApi('/api/categories', 'get');
+  categories.value = res;
+};
+// 카테고리 목록 조회
+await getCategories();
+
+// 그룹 추가
+const addGroup = async () => {
+  const { status } = await useFetchApi('/api/category', 'post', {
+    name: newGroupName.value,
+  });
+  if (status === 'ok') {
+    newGroupName.value = '';
+    addInput.value = false;
+    getCategories();
+  }
+};
 </script>
 
 <template>
   <h2>카테고리 관리</h2>
 
-  <!-- 대분류 -->
-  <!-- <select v-model="categoryGroup.parentId">
-    <option value="">대분류 선택</option>
-    <option v-for="group in res" :value="group.id">
-      {{ group.name }}
-    </option>
-  </select> -->
-
-  <!-- 카테고리 -->
-  <!-- <select v-if="categoryGroup.parentId">
-    <option value="">카테고리 선택</option>
-    <option
-      v-for="category in res.find((el) => el.id == categoryGroup.parentId).list"
-      value=""
-    >
-      {{ category.name }}
-    </option>
-  </select> -->
-  <!-- 
   <div>
-    <input type="text" />
-    <button>추가</button>
-  </div> -->
-
-  <div>
-    <ul class="category">
-      <li class="group" v-for="parent in res">
-        <div>
-          <p>{{ parent.name }}</p>
-          <div class="btns">
-            <button>수정</button>
-            <button>삭제</button>
-          </div>
-        </div>
-        <ul>
-          <li class="group-item" v-for="child in parent.list">
-            <div>
-              <p>{{ child.name }}</p>
-            </div>
+    <div class="category">
+      <ul>
+        <li class="group" v-for="parent in categories">
+          <div>
+            <p>{{ parent.name }}</p>
             <div class="btns">
               <button>수정</button>
               <button>삭제</button>
             </div>
-          </li>
-        </ul>
-      </li>
-    </ul>
+          </div>
+          <ul>
+            <li class="group-item" v-for="child in parent.list">
+              <div>
+                <p>{{ child.name }}</p>
+              </div>
+              <div class="btns">
+                <button>수정</button>
+                <button>삭제</button>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li v-if="addInput" class="group new-group">
+          <div>
+            <input type="text" v-model="newGroupName" />
+            <div class="btns">
+              <button>취소</button>
+              <button :class="{ disabled: !newGroupName }" @click="addGroup">
+                확인
+              </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="add-group" @click="addInput = true">
+        <p>+ 카테고리 추가</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -88,11 +96,22 @@ const categoryGroup = ref({
       border: 1px solid #ccc;
       .btns {
         display: none;
+        button {
+          padding: 5px 15px;
+          background-color: #fff;
+          color: #333;
+          border: 1px solid #ccc;
+          cursor: pointer;
+          &.disabled {
+            color: #ccc;
+          }
+        }
         button + button {
           margin-left: 5px;
         }
       }
       &:hover {
+        background-color: #f7f7f7;
         .btns {
           display: block;
         }
@@ -106,6 +125,36 @@ const categoryGroup = ref({
       font-size: 16px;
       margin-left: 20px;
     }
+  }
+
+  .new-group {
+    > div {
+      background-color: #f7f7f7;
+    }
+
+    input {
+      width: 200px;
+      height: 30px;
+      padding-left: 10px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+    .btns {
+      display: block !important;
+    }
+  }
+
+  .add-group {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    margin: 10px 0 0 0;
+    padding: 0 20px;
+    background: none;
+    border: 1px solid #777;
+    border-style: dashed;
+    font-weight: 300;
+    cursor: pointer;
   }
 }
 </style>
