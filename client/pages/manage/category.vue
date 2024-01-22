@@ -52,7 +52,12 @@ const deleteCategory = async (item) => {
             <p>{{ group.name }}</p>
             <div class="btns">
               <button>수정</button>
-              <button @click="deleteCategory(group)">삭제</button>
+              <button
+                @click="deleteCategory(group)"
+                :disabled="group.list.length"
+              >
+                삭제
+              </button>
             </div>
           </div>
           <ul>
@@ -72,9 +77,7 @@ const deleteCategory = async (item) => {
             <input type="text" v-model="newGroupName" />
             <div class="btns">
               <button>취소</button>
-              <button :class="{ disabled: !newGroupName }" @click="addGroup">
-                확인
-              </button>
+              <button @click="addGroup" :disabled="!newGroupName">확인</button>
             </div>
           </div>
         </li>
@@ -116,7 +119,7 @@ const deleteCategory = async (item) => {
           color: #333;
           border: 1px solid #ccc;
           cursor: pointer;
-          &.disabled {
+          &:disabled {
             color: #ccc;
           }
         }

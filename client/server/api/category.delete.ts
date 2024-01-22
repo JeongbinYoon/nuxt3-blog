@@ -3,12 +3,17 @@ import getMySQLConnection from '~/server/db/index';
 
 export default defineEventHandler(async (e) => {
   try {
-    const { id, parent_id = '' } = await readBody(e);
+    const data = await readBody(e);
+    const { id, parentId, list } = await readBody(e);
+
+    if (!parentId && list.length > 0) {
+      throw new Error('해당 그룹에 카테고리가 존재하여 삭제할 수 없습니다.');
+    }
 
     // 연결 풀에서 연결 가져오기
     const connection = await getMySQLConnection();
 
-    const target = parent_id ? 'child_categories' : 'parent_categories';
+    const target = parentId ? 'child_categories' : 'parent_categories';
     const sql = `
         DELETE FROM ${target}
         WHERE id=${id};

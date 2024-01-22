@@ -14,7 +14,6 @@ export default defineEventHandler(async (e) => {
       `;
 
     const [data] = await connection.execute<ResultSetHeader>(sql);
-    console.log('>>>', data);
 
     // 연결 반환
     connection.release();
