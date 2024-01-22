@@ -25,6 +25,20 @@ const addGroup = async () => {
     getCategories();
   }
 };
+
+// 그룹, 카테고리 삭제
+const deleteCategory = async (item) => {
+  if (!item) return;
+
+  const answer = confirm(`${item.name}를 정말 삭제하시겠습니까?`);
+  if (!answer) return;
+
+  const { status } = await useFetchApi('/api/category', 'delete', {}, item);
+  if (status === 'ok') {
+    alert('삭제되었습니다.');
+    getCategories();
+  }
+};
 </script>
 
 <template>
@@ -33,18 +47,18 @@ const addGroup = async () => {
   <div>
     <div class="category">
       <ul>
-        <li class="group" v-for="parent in categories">
+        <li class="group" v-for="group in categories">
           <div>
-            <p>{{ parent.name }}</p>
+            <p>{{ group.name }}</p>
             <div class="btns">
               <button>수정</button>
-              <button>삭제</button>
+              <button @click="deleteCategory(group)">삭제</button>
             </div>
           </div>
           <ul>
-            <li class="group-item" v-for="child in parent.list">
+            <li class="group-item" v-for="item in group.list">
               <div>
-                <p>{{ child.name }}</p>
+                <p>{{ item.name }}</p>
               </div>
               <div class="btns">
                 <button>수정</button>
