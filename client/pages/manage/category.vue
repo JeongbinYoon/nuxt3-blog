@@ -63,7 +63,10 @@ const deleteCategory = async (item) => {
           <ul>
             <li class="group-item" v-for="item in group.list">
               <div>
-                <p>{{ item.name }}</p>
+                <p>
+                  {{ item.name }}
+                  <span class="post-count">({{ item.postCount }})</span>
+                </p>
               </div>
               <div class="btns">
                 <button>수정</button>
@@ -74,7 +77,11 @@ const deleteCategory = async (item) => {
         </li>
         <li v-if="addInput" class="group new-group">
           <div>
-            <input type="text" v-model="newGroupName" />
+            <input
+              type="text"
+              v-model="newGroupName"
+              placeholder="카테고리 이름 입력"
+            />
             <div class="btns">
               <button>취소</button>
               <button @click="addGroup" :disabled="!newGroupName">확인</button>
@@ -107,7 +114,7 @@ const deleteCategory = async (item) => {
       justify-content: space-between;
       align-items: center;
       padding: 0 20px;
-      font-size: 18px;
+      font-size: 16px;
       height: 45px;
       background-color: #fff;
       border: 1px solid #ccc;
@@ -139,8 +146,13 @@ const deleteCategory = async (item) => {
       margin-bottom: -1px;
     }
     .group-item {
-      font-size: 16px;
       margin-left: 20px;
+      font-size: 14px;
+      .post-count {
+        margin-left: 5px;
+        color: #666;
+        letter-spacing: 2px;
+      }
     }
   }
 

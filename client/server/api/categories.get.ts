@@ -15,15 +15,15 @@ export default defineEventHandler(async () => {
     // 연결 풀에서 연결 가져오기
     const connection = await getMySQLConnection();
 
-    // 하위 카테고리
+    // 카테고리
     const sql = `
-            SELECT child_categories.id as categoryId,child_categories.name, parent_categories.id as parentId
+            SELECT child_categories.id as categoryId,child_categories.name, post_count as postCount, parent_categories.id as parentId
             FROM child_categories
             LEFT JOIN parent_categories
             ON parent_id=parent_categories.id;
           `;
 
-    // 상위 카테고리
+    // 그룹
     const sql2 = `
               SELECT *
               FROM parent_categories;

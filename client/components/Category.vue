@@ -7,13 +7,14 @@ const { res } = await useFetchApi('/api/categories', 'get');
       <li>
         <NuxtLink to="/category/all">전체 글 보기</NuxtLink>
       </li>
-      <li v-for="parent in res">
-        <p class="parent">{{ parent.name }}</p>
+      <li v-for="group in res">
+        <p class="group">{{ group.name }}</p>
         <ul>
-          <li v-for="child in parent.list">
-            <NuxtLink :to="`/category/${child.categoryId}`" class="child">{{
-              child.name
-            }}</NuxtLink>
+          <li v-for="category in group.list">
+            <NuxtLink :to="`/category/${category.categoryId}`" class="category">
+              <span>{{ category.name }}</span>
+              <span class="post-count"> {{ category.postCount }}개</span>
+            </NuxtLink>
           </li>
         </ul>
       </li>

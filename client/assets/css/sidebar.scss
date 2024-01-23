@@ -9,17 +9,24 @@
       > ul > li {
         margin-bottom: 10px;
         font-size: 14px;
-        .parent {
+        .group {
           padding: 5px 0;
         }
       }
       > ul > li > ul {
         border-left: 1px solid #eee;
-        .child {
-          display: inline-block;
+        .category {
+          display: flex;
+          align-items: center;
           padding: 5px 0;
           font-size: 13px;
           margin-left: 10px;
+          .post-count {
+            margin-left: 5px;
+            font-size: 12px;
+            color: #666;
+            letter-spacing: 1px;
+          }
         }
       }
     }
