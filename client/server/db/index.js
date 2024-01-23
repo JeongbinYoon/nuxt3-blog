@@ -41,7 +41,7 @@ const updateCategoryPostCount = async () => {
   }
 };
 
-// 글이 추가될 때마다 카테고리 테이블의 글 개수를 증가시키는 트리거 생성
+// 글이 추가, 수정, 삭제될 때마다 카테고리 테이블의 글 개수를 변경시키는 트리거 생성
 const createTriggerQuery = `
 CREATE TRIGGER after_post_insert
 AFTER INSERT ON posts
@@ -53,6 +53,34 @@ BEGIN
 END;
 `;
 
+const deleteTriggerQuery = `
+CREATE TRIGGER after_post_delete
+AFTER DELETE ON posts
+FOR EACH ROW
+BEGIN
+  UPDATE child_categories
+  SET post_count = post_count - 1
+  WHERE id = OLD.category;
+END;
+`;
+
+const updateTriggerQuery = `
+CREATE TRIGGER after_post_update
+AFTER UPDATE ON posts
+FOR EACH ROW
+BEGIN
+  IF OLD.category <> NEW.category THEN
+    UPDATE child_categories
+    SET post_count = post_count - 1
+    WHERE id = OLD.category;
+
+    UPDATE child_categories
+    SET post_count = post_count + 1
+    WHERE id = NEW.category;
+  END IF;
+END;
+`;
+
 // 트리거 생성
 const createTrigger = async () => {
   try {
@@ -61,15 +89,45 @@ const createTrigger = async () => {
     );
     if (existingTriggers.length === 0) {
       await pool.query(createTriggerQuery);
-      console.log('Trigger created successfully');
+      console.log('[post-create] 트리거 생성 완료');
     }
   } catch (err) {
-    console.error('Trigger creation failed: ' + err.stack);
+    console.error('[post-create] 트리거 생성 실패: ' + err.stack);
+  }
+};
+
+const deleteTrigger = async () => {
+  try {
+    const [existingTriggers] = await pool.query(
+      'SHOW TRIGGERS LIKE "after_post_delete"'
+    );
+    if (existingTriggers.length === 0) {
+      await pool.query(deleteTriggerQuery);
+      console.log('[post-delete] 트리거 생성 완료');
+    }
+  } catch (err) {
+    console.error('[post-delete] 트리거 생성 실패: ' + err.stack);
+  }
+};
+
+const updateTrigger = async () => {
+  try {
+    const [existingTriggers] = await pool.query(
+      'SHOW TRIGGERS LIKE "after_post_update"'
+    );
+    if (existingTriggers.length === 0) {
+      await pool.query(updateTriggerQuery);
+      console.log('[post-update] 트리거 생성 완료');
+    }
+  } catch (err) {
+    console.error('[post-update] 트리거 생성 실패: ' + err.stack);
   }
 };
 
 // 트리거 생성 함수 호출
 createTrigger();
+deleteTrigger();
+updateTrigger();
 
 // 카테고리 글 개수 업데이트 함수 호출
 // updateCategoryPostCount();
