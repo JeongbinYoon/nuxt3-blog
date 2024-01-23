@@ -5,24 +5,52 @@ definePageMeta({
 
 const categories = ref([]);
 const newGroupName = ref('');
-const addInput = ref(false);
+const newCategoryName = ref('');
+const addGroupInput = ref(false);
+const addCategoryGroupId = ref('');
 
 const getCategories = async () => {
   const { res } = await useFetchApi('/api/categories', 'get');
   categories.value = res;
 };
+
 // 카테고리 목록 조회
 await getCategories();
 
-// 그룹 추가
-const addGroup = async () => {
-  const { status } = await useFetchApi('/api/category', 'post', {
-    name: newGroupName.value,
-  });
-  if (status === 'ok') {
+// 추가 인풋 삭제
+const deleteAddInput = (type: string) => {
+  if (type === 'group') {
     newGroupName.value = '';
-    addInput.value = false;
+    addGroupInput.value = false;
+  } else if (type === 'category') {
+    newCategoryName.value = '';
+    addCategoryGroupId.value = '';
+  }
+};
+
+// 그룹, 카테고리 추가
+const addGroup = async (type: string) => {
+  const params = {
+    type,
+    name: type === 'group' ? newGroupName.value : newCategoryName.value,
+  };
+
+  if (type === 'category') {
+    params.parentId = addCategoryGroupId.value;
+  }
+
+  const { msg, status } = await useFetchApi(
+    '/api/category',
+    'post',
+    {},
+    params
+  );
+
+  if (status === 'ok') {
+    deleteAddInput(type);
     getCategories();
+  } else {
+    alert(msg);
   }
 };
 
@@ -58,6 +86,7 @@ const deleteCategory = async (item) => {
           <div>
             <p>{{ group.name }}</p>
             <div class="btns">
+              <button @click="addCategoryGroupId = group.id">추가</button>
               <button>수정</button>
               <button
                 @click="deleteCategory(group)"
@@ -85,24 +114,51 @@ const deleteCategory = async (item) => {
                 </button>
               </div>
             </li>
+
+            <!-- 카테고리 추가 영역 -->
+            <li
+              v-if="addCategoryGroupId === group.id"
+              class="group-item add-input"
+            >
+              <div>
+                <input
+                  type="text"
+                  v-model="newCategoryName"
+                  placeholder="카테고리 이름 입력"
+                />
+              </div>
+              <div class="btns">
+                <button @click="deleteAddInput('category')">취소</button>
+                <button
+                  @click="addGroup('category')"
+                  :disabled="!newCategoryName"
+                >
+                  확인
+                </button>
+              </div>
+            </li>
           </ul>
         </li>
-        <li v-if="addInput" class="group new-group">
+
+        <!-- 그룹 추가 영역 -->
+        <li v-if="addGroupInput" class="group add-input">
           <div>
             <input
               type="text"
               v-model="newGroupName"
-              placeholder="카테고리 이름 입력"
+              placeholder="그룹 이름 입력"
             />
             <div class="btns">
-              <button>취소</button>
-              <button @click="addGroup" :disabled="!newGroupName">확인</button>
+              <button @click="deleteAddInput('group')">취소</button>
+              <button @click="addGroup('group')" :disabled="!newGroupName">
+                확인
+              </button>
             </div>
           </div>
         </li>
       </ul>
-      <div class="add-group" @click="addInput = true">
-        <p>+ 카테고리 추가</p>
+      <div class="add-group" @click="addGroupInput = true">
+        <p>+ 그룹 추가</p>
       </div>
     </div>
   </div>
@@ -168,7 +224,7 @@ const deleteCategory = async (item) => {
     }
   }
 
-  .new-group {
+  .add-input {
     > div {
       background-color: #f7f7f7;
     }
