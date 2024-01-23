@@ -3,20 +3,22 @@ import getMySQLConnection from '~/server/db/index';
 
 export default defineEventHandler(async (e) => {
   try {
-    const data = await readBody(e);
-    const { id, parentId, list } = await readBody(e);
+    const { id, categoryId, parentId, list, postCount } = await readBody(e);
 
     if (!parentId && list.length > 0) {
       throw new Error('해당 그룹에 카테고리가 존재하여 삭제할 수 없습니다.');
+    } else if (categoryId && postCount > 0) {
+      throw new Error('해당 카테고리가 포스트가 존재하여 삭제할 수 없습니다.');
     }
 
     // 연결 풀에서 연결 가져오기
     const connection = await getMySQLConnection();
 
-    const target = parentId ? 'child_categories' : 'parent_categories';
+    const targetTable = parentId ? 'child_categories' : 'parent_categories';
+    const targetId = categoryId ? categoryId : id;
     const sql = `
-        DELETE FROM ${target}
-        WHERE id=${id};
+        DELETE FROM ${targetTable}
+        WHERE id=${targetId};
       `;
 
     await connection.execute(sql);
@@ -26,9 +28,15 @@ export default defineEventHandler(async (e) => {
     return {
       status: 'ok',
     };
-  } catch (error) {
+  } catch (error: unknown) {
     console.error(error);
+
+    let errMsg = '';
+    if (error instanceof Error) {
+      errMsg = error.message;
+    }
     return {
+      msg: errMsg,
       status: 'bad',
     };
   }

@@ -33,10 +33,17 @@ const deleteCategory = async (item) => {
   const answer = confirm(`${item.name}를 정말 삭제하시겠습니까?`);
   if (!answer) return;
 
-  const { status } = await useFetchApi('/api/category', 'delete', {}, item);
+  const { msg, status } = await useFetchApi(
+    '/api/category',
+    'delete',
+    {},
+    item
+  );
   if (status === 'ok') {
     alert('삭제되었습니다.');
     getCategories();
+  } else {
+    alert(msg);
   }
 };
 </script>
@@ -70,7 +77,12 @@ const deleteCategory = async (item) => {
               </div>
               <div class="btns">
                 <button>수정</button>
-                <button>삭제</button>
+                <button
+                  @click="deleteCategory(item)"
+                  :disabled="item.postCount > 0"
+                >
+                  삭제
+                </button>
               </div>
             </li>
           </ul>
