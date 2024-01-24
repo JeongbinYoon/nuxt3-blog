@@ -1,9 +1,9 @@
 $container-max-width: 1200px;
 
-$content-width: 800px;
-$content-padding-top: 50px;
+$content-width: 100%;
+$content-padding: 50px;
 
-$sidebar-width: 200px;
+$sidebar-width: 270px !important;
 
 $header-height: 65px;
 
@@ -25,9 +25,22 @@ $color-primary-dark: #ff7f3f;
 // $color-status-info: #17a2b8;
 
 $color-border-gray: #ccced1;
-
 $color-gray-100: #f6f6f6;
 $color-gray-200: #cecece;
 $color-gray-300: #c4c4c4;
 $color-gray-400: #a1a1a1;
 $color-gray-500: #7c7c7c;
+
+$color: rgba(255, 255, 255, 0.9);
+$color-blur: rgba(255, 255, 255, 0.8);
+$color-blurrier: rgba(255, 255, 255, 0.6);
+$color-blurriest: rgba(255, 255, 255, 0.4);
+$color-background-level-1: #1e1f21;
+$color-background-level-2: #292a2d;
+$color-background-level-3: #353638;
+$color-background-level-4: rgba(30, 31, 33, 0.6);
+$color-theme: #5db0d7;
+$button-color: rgba(255, 255, 255, 0.9);
+$button-color-background: #353638;
+$button-color-hover: rgba(255, 255, 255, 0.9);
+$button-color-hover-background: #353638;

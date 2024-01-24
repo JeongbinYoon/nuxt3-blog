@@ -48,7 +48,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="post" id="content">
+  <div class="post content-container" id="content">
     <h2 ref="titleRef" class="title">{{ res.title }}</h2>
     <div class="flex">
       <span class="created">{{ `${created.date} ${created.time}` }}</span>

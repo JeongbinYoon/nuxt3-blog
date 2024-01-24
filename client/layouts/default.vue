@@ -1,11 +1,10 @@
 <template>
-  <div>
-    <Header />
-    <div class="flex justify-c">
-      <Sidebar />
-      <div class="content-container">
-        <slot />
-      </div>
+  <div class="flex">
+    <Sidebar />
+    <div class="content-area">
+      <Header />
+
+      <slot />
     </div>
   </div>
 </template>

@@ -10,7 +10,7 @@ const getCreatedAt = (created) => {
 };
 </script>
 <template>
-  <ul>
+  <ul id="post-list">
     <li v-for="post in posts" class="post">
       <NuxtLink :to="`/post/${post.post_id}`" class="title">{{
         post.title

@@ -64,12 +64,16 @@
   color: $color-primary;
 }
 
+.content-area {
+  flex: 1;
+  background-color: $color-background-level-1;
+}
+
 // container
 .max-container {
   width: $container-max-width;
 }
 
 .content-container {
-  width: $content-width;
-  padding-top: $content-padding-top;
+  padding: $content-padding;
 }
