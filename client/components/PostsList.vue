@@ -49,9 +49,8 @@ const getCreatedAt = (created) => {
   overflow: hidden;
 }
 .post-info {
-  color: #666;
-  > span {
-    margin-right: 15px;
+  span + span {
+    margin-left: 15px;
   }
 }
 </style>
