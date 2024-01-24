@@ -73,7 +73,7 @@ const onComplete = () => {
 
 <template>
   <div id="write">
-    <div class="content-container">
+    <div>
       <ClientOnly>
         <!-- 카테고리 -->
         <select

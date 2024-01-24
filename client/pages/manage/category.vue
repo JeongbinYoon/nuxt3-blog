@@ -77,7 +77,7 @@ const deleteCategory = async (item) => {
 </script>
 
 <template>
-  <div id="manage-category" class="content-container">
+  <div id="manage-category">
     <h2>카테고리 관리</h2>
 
     <div class="category">
