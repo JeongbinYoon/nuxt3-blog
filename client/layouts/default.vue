@@ -7,4 +7,7 @@
       <slot />
     </div>
   </div>
+  <ClientOnly>
+    <FloatingButton />
+  </ClientOnly>
 </template>

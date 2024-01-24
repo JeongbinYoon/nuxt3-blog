@@ -26,6 +26,28 @@ h5,
 h6,
 p,
 a,
-span {
+span,
+div {
   color: $color;
+}
+
+#floating {
+  position: fixed;
+  right: 20px;
+  bottom: 25px;
+  .floating-btn + .floating-btn {
+    margin-top: 10px;
+  }
+
+  > .floating-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    background: $button-color-background;
+    outline: none;
+    border-radius: 50%;
+    cursor: pointer;
+  }
 }
