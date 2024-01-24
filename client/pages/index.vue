@@ -1,3 +1,5 @@
 <template>
-  <p>main</p>
+  <div id="main" class="content-margin">
+    <p>main</p>
+  </div>
 </template>

@@ -69,6 +69,10 @@
   background-color: $color-background-level-1;
 }
 
+.content-margin {
+  margin: calc(120px - $header-height) 30px 120px 30px;
+}
+
 // container
 .max-container {
   width: $container-max-width;

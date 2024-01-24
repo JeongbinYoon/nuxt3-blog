@@ -48,8 +48,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="post" id="content">
+  <div class="post content-margin" id="content">
+    <!-- 글 제목 -->
     <h2 ref="titleRef" class="title">{{ res.title }}</h2>
+
+    <!-- meta info -->
     <div class="meta-info">
       <span class="created">{{ `${created.date} ${created.time}` }}</span>
       <div class="meta-info-btns">
@@ -61,6 +64,8 @@ onMounted(() => {
         </button>
       </div>
     </div>
+
+    <!-- 글 내용 -->
     <div class="ck-content" v-html="res.contents"></div>
   </div>
 </template>

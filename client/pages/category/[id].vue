@@ -6,7 +6,7 @@ const { res } = await useFetchApi('/api/posts', 'get', {
 </script>
 
 <template>
-  <div>
+  <div class="content-margin">
     <PostsList :posts="res" />
   </div>
 </template>
