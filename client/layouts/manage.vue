@@ -1,8 +1,7 @@
 <template>
-  <Header />
-  <div class="flex justify-c">
+  <div class="flex">
     <ManageSidebar />
-    <div class="content-container">
+    <div class="content-area">
       <slot />
     </div>
   </div>

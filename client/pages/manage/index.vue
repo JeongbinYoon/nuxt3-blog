@@ -5,7 +5,5 @@ definePageMeta({
 </script>
 
 <template>
-  <div>
-    <!-- <ManageCategory /> -->
-  </div>
+  <div></div>
 </template>

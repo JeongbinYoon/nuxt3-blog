@@ -77,9 +77,9 @@ const deleteCategory = async (item) => {
 </script>
 
 <template>
-  <h2>카테고리 관리</h2>
+  <div id="manage-category" class="content-container">
+    <h2>카테고리 관리</h2>
 
-  <div>
     <div class="category">
       <ul>
         <li class="group" v-for="group in categories">
@@ -166,92 +166,4 @@ const deleteCategory = async (item) => {
 
 <style scoped>
 @import '~/assets/css/reset.scss';
-
-.category {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: rgb(236, 240, 244);
-
-  .group > div {
-    margin-bottom: -1px;
-  }
-  .group {
-    > div,
-    .group-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 20px;
-      font-size: 16px;
-      height: 45px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      .btns {
-        display: none;
-        button {
-          padding: 5px 15px;
-          background-color: #fff;
-          color: #333;
-          border: 1px solid #ccc;
-          cursor: pointer;
-          &:disabled {
-            color: #ccc;
-          }
-        }
-        button + button {
-          margin-left: 5px;
-        }
-      }
-      &:hover {
-        background-color: #f7f7f7;
-        .btns {
-          display: block;
-        }
-      }
-    }
-
-    > ul > li {
-      margin-bottom: -1px;
-    }
-    .group-item {
-      margin-left: 20px;
-      font-size: 14px;
-      .post-count {
-        margin-left: 5px;
-        color: #666;
-        letter-spacing: 2px;
-      }
-    }
-  }
-
-  .add-input {
-    > div {
-      background-color: #f7f7f7;
-    }
-
-    input {
-      width: 200px;
-      height: 30px;
-      padding-left: 10px;
-      border: 1px solid #ccc;
-      outline: none;
-    }
-    .btns {
-      display: block !important;
-    }
-  }
-
-  .add-group {
-    display: flex;
-    align-items: center;
-    height: 45px;
-    margin: 10px 0 0 0;
-    padding: 0 20px;
-    background: none;
-    border: 1px solid #777;
-    border-style: dashed;
-    font-weight: 300;
-    cursor: pointer;
-  }
-}
 </style>
