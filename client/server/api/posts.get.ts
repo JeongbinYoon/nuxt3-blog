@@ -5,16 +5,15 @@ export default defineEventHandler(async (e) => {
     const categoryId = getQuery(e).categoryId;
     // 연결 풀에서 연결 가져오기
     const connection = await getMySQLConnection();
-    let sql_where = '';
-    if (categoryId && categoryId !== 'all') {
-      sql_where = ` WHERE category=${categoryId};`;
-    }
+    const sql_where =
+      categoryId && categoryId !== 'all' ? `WHERE category=${categoryId}` : '';
+
     let sql = `
-        SELECT posts.id as post_id, title, preview, account, name, category, created 
-        FROM posts 
-        LEFT JOIN user 
-        ON posts.author=user.id
-        ${sql_where ? sql_where : ';'}
+        SELECT posts.id AS postId, title, preview, category, created, child_categories.name AS categoryName, parent_categories.name AS groupName
+        FROM posts
+        LEFT JOIN child_categories ON posts.category = child_categories.id
+        LEFT JOIN parent_categories ON parent_id = parent_categories.id
+        ${sql_where};
       `;
 
     const [rows] = await connection.execute(sql);

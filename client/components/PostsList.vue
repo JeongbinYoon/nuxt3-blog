@@ -1,37 +1,47 @@
-<script setup>
+<script setup lang="ts">
 defineProps({
   posts: Object,
 });
 
-const getCreatedAt = (created) => {
-  const date = created.split('T')[0];
-  const time = created.split('T')[1].split('.')[0];
-  return `${date} ${time}`;
+const getCreatedAt = (created: '') => {
+  return created.split('T')[0];
 };
 </script>
 <template>
   <ul id="post-list">
     <li v-for="post in posts" class="post">
-      <NuxtLink :to="`/post/${post.post_id}`" class="title">{{
-        post.title
-      }}</NuxtLink>
-      <div class="preview" v-html="post.preview"></div>
-      <div class="post-info">
-        <span class="created">{{ getCreatedAt(post.created) }}</span>
-        <span class="comment">0개의 댓글</span>
+      <div class="flex-colum">
+        <span class="category-path">
+          {{ `${post.groupName} / ${post.categoryName}` }}
+        </span>
+        <NuxtLink :to="`/post/${post.postId}`">
+          <p class="title">{{ post.title }}</p>
+        </NuxtLink>
+        <div class="preview" v-html="post.preview"></div>
+        <div class="post-meta">
+          <span class="created">{{ getCreatedAt(post.created) }}</span>
+        </div>
       </div>
+      <div>이미지</div>
     </li>
   </ul>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 @import '~/assets/css/reset.scss';
-
+@import '~/assets/css/variables.scss';
 .post {
+  display: flex;
+  justify-content: space-between;
   padding: 40px 0;
 }
 .post + .post {
   border-top: 1px solid #eee;
+}
+.category-path {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: $color-blurrier;
 }
 .title {
   display: inline-block;
@@ -48,7 +58,10 @@ const getCreatedAt = (created) => {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.post-info {
+.post-meta {
+  span {
+    color: $color-blurrier;
+  }
   span + span {
     margin-left: 15px;
   }
