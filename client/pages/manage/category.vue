@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 definePageMeta({
-  layout: 'manage',
+  layout: 'admin',
 });
 
 const categories = ref([]);

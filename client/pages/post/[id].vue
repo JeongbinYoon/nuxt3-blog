@@ -50,13 +50,15 @@ onMounted(() => {
 <template>
   <div class="post" id="content">
     <h2 ref="titleRef" class="title">{{ res.title }}</h2>
-    <div class="flex">
+    <div class="meta-info">
       <span class="created">{{ `${created.date} ${created.time}` }}</span>
-      <div class="btn-group">
+      <div class="meta-info-btns">
         <button @click="$router.push(`/write?postId=${route.params.id}`)">
-          수정
+          <font-awesome-icon icon="pen" />
         </button>
-        <button @click="deletePost">삭제</button>
+        <button @click="deletePost">
+          <font-awesome-icon icon="trash" />
+        </button>
       </div>
     </div>
     <div class="ck-content" v-html="res.contents"></div>
