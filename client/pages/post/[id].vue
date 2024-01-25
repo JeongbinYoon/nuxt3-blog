@@ -48,7 +48,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="post content-margin" id="content">
+  <div class="post content-padding" id="content">
     <!-- 글 제목 -->
     <h2 ref="titleRef" class="title">{{ res.title }}</h2>
 

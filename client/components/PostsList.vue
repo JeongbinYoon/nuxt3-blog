@@ -10,7 +10,7 @@ const getCreatedAt = (created: '') => {
 <template>
   <ul id="post-list">
     <li v-for="post in posts" class="post">
-      <div class="flex-colum">
+      <div class="flex-column">
         <span class="category-path">
           {{ `${post.groupName} / ${post.categoryName}` }}
         </span>

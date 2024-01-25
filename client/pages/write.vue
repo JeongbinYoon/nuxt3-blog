@@ -74,31 +74,31 @@ const onComplete = () => {
 <template>
   <div id="write">
     <div>
+      <!-- 카테고리 -->
+      <select
+        v-model="postInfo.category"
+        @change="categoryChange"
+        class="category-select"
+      >
+        <option value="">카테고리 선택</option>
+        <optgroup v-for="group in categories" :label="group.name">
+          <option v-for="category in group.list" :value="category.categoryId">
+            {{ category.name }}
+          </option>
+        </optgroup>
+      </select>
+
+      <!-- 제목 -->
+      <textarea
+        class="title-input"
+        v-model="postInfo.title"
+        placeholder="제목을 입력하세요"
+        autofocus
+        required
+      ></textarea>
+
+      <!-- 에디터 -->
       <ClientOnly>
-        <!-- 카테고리 -->
-        <select
-          v-model="postInfo.category"
-          @change="categoryChange"
-          class="category-select"
-        >
-          <option value="">카테고리 선택</option>
-          <optgroup v-for="group in categories" :label="group.name">
-            <option v-for="category in group.list" :value="category.categoryId">
-              {{ category.name }}
-            </option>
-          </optgroup>
-        </select>
-
-        <!-- 제목 -->
-        <textarea
-          class="title-input"
-          v-model="postInfo.title"
-          placeholder="제목을 입력하세요"
-          autofocus
-          required
-        ></textarea>
-
-        <!-- 에디터 -->
         <Editor v-model="postInfo.contents" />
       </ClientOnly>
 
