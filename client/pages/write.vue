@@ -98,9 +98,11 @@ const onComplete = () => {
       ></textarea>
 
       <!-- 에디터 -->
-      <ClientOnly>
-        <Editor v-model="postInfo.contents" />
-      </ClientOnly>
+      <div class="editor-content-area">
+        <ClientOnly>
+          <Editor v-model="postInfo.contents" />
+        </ClientOnly>
+      </div>
 
       <div class="btn-group">
         <button @click="onTmpStorage" class="btn btn-white">임시저장</button>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    <div class="flex justify-c">
+    <div class="content-area content-padding">
       <slot />
     </div>
   </div>
