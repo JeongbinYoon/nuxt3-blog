@@ -30,6 +30,11 @@ const getCreatedAt = (created: '') => {
 <style lang="scss" scoped>
 @import '~/assets/css/reset.scss';
 @import '~/assets/css/variables.scss';
+
+#post-list {
+  max-width: 1100px;
+  margin: 0 auto;
+}
 .post {
   display: flex;
   justify-content: space-between;
