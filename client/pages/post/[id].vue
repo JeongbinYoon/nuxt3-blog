@@ -28,6 +28,12 @@ const deletePost = async () => {
   }
 };
 
+// 공감
+const isLiked = ref(false);
+const toggleLike = () => {
+  isLiked.value = !isLiked.value;
+};
+
 // 글 스크롤 감지
 const titleRef = ref();
 onMounted(() => {
@@ -67,5 +73,18 @@ onMounted(() => {
 
     <!-- 글 내용 -->
     <div class="ck-content" v-html="res.contents"></div>
+
+    <!-- 공감, 공유 -->
+    <ClientOnly>
+      <div class="icons">
+        <button class="like" :class="{ selected: isLiked }" @click="toggleLike">
+          <font-awesome-icon icon="heart" />
+        </button>
+
+        <button class="share">
+          <font-awesome-icon icon="share-nodes" />
+        </button>
+      </div>
+    </ClientOnly>
   </div>
 </template>

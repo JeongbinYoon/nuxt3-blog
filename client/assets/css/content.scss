@@ -30,5 +30,26 @@
         }
       }
     }
+
+    .icons {
+      button + button {
+        margin-left: 10px;
+      }
+      button {
+        padding: 5px 15px;
+        color: $button-color;
+        font-size: 18px;
+        background-color: $button-color-background;
+        border-radius: 4px;
+
+        &:hover {
+          background-color: $button-color-hover-background;
+        }
+
+        &.like.selected {
+          background-color: #f00;
+        }
+      }
+    }
   }
 }
