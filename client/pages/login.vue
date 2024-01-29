@@ -1,16 +1,39 @@
-<script setup>
+<script lang="ts" setup>
 definePageMeta({
   layout: 'login',
 });
+
+const id = ref('');
+const pw = ref('');
+const name = ref('');
+
+const onLogin = async () => {
+  await useFetchApi(
+    '/api/login',
+    'post',
+    {},
+    { id: id.value, pw: pw.value, name: name.value }
+  );
+};
+const onJoin = async () => {
+  await useFetchApi(
+    '/api/join',
+    'post',
+    {},
+    { id: id.value, pw: pw.value, name: name.value }
+  );
+};
 </script>
 
 <template>
   <div class="login-form">
     <h2>로그인</h2>
-    <input type="text" placeholder="아이디" />
-    <input type="password" placeholder="패스워드" />
+    <input v-model="id" type="text" placeholder="아이디" />
+    <input v-model="pw" type="password" placeholder="패스워드" />
+    <input v-model="name" type="name" placeholder="별명" />
 
-    <input class="login-btn" type="button" value="로그인" />
+    <input @click="onLogin" class="login-btn" type="button" value="로그인" />
+    <input @click="onJoin" class="join-btn" type="button" value="회원가입" />
   </div>
 </template>
 
@@ -29,7 +52,11 @@ definePageMeta({
   }
 
   .login-btn {
-    margin-top: 15px;
+    margin-top: 10px;
+  }
+
+  .login-btn,
+  .join-btn {
     background: $button-color-background;
     color: $button-color;
     border: none;
