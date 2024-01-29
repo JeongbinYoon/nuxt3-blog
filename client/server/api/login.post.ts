@@ -3,34 +3,28 @@ import { RowDataPacket } from 'mysql2';
 import getMySQLConnection from '~/server/db/index';
 
 export default defineEventHandler(async (e) => {
-  const { id, pw, name } = await readBody(e);
+  const { id, pw } = await readBody(e);
   try {
-    const hashedPw = await bcrypt.hash(pw, 10);
-
     // 연결 풀에서 연결 가져오기
     const connection = await getMySQLConnection();
 
     const checkUser = `
-        SELECT * FROM user WHERE account='${id}';
-      `;
+    SELECT * FROM user WHERE account='${id}';
+    `;
 
     const [rows] = await connection.execute(checkUser);
-
-    const isIdExist = !!(rows as RowDataPacket[])[0]?.id;
-    console.log(isIdExist);
+    const user = (rows as RowDataPacket)[0];
 
     let msg = '';
-    if (isIdExist) {
-      msg = '이미 존재하는 아이디입니다.';
-    } else {
-      const sql = `
-            INSERT INTO user (account, password, name) VALUES('${id}','${hashedPw}','${name}');
-          `;
 
-      await connection.execute(sql);
-
-      msg = '회원가입 완료';
-    }
+    if (user) {
+      const isPwCorrect = await bcrypt.compare(pw, user.password);
+      if (isPwCorrect) {
+        msg = '로그인 성공';
+      } else {
+        msg = '아이디 또는 패스워드가 틀렸습니다.';
+      }
+    } else msg = '아이디 또는 패스워드가 틀렸습니다.';
 
     // 연결 반환
     connection.release();
