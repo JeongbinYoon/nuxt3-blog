@@ -3,25 +3,32 @@ definePageMeta({
   layout: 'login',
 });
 
+const router = useRouter();
+
 const id = ref('');
 const pw = ref('');
 const name = ref('');
 
 const onLogin = async () => {
-  await useFetchApi(
+  const { res, status } = await useFetchApi(
     '/api/login',
     'post',
     {},
     { id: id.value, pw: pw.value, name: name.value }
   );
+  if (status === 'ok') {
+    router.push('/');
+  } else alert(res.msg);
 };
 const onJoin = async () => {
-  await useFetchApi(
+  const { res } = await useFetchApi(
     '/api/join',
     'post',
     {},
     { id: id.value, pw: pw.value, name: name.value }
   );
+
+  alert(res.msg);
 };
 </script>
 

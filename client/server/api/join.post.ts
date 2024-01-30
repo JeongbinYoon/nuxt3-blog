@@ -17,7 +17,6 @@ export default defineEventHandler(async (e) => {
     const [rows] = await connection.execute(checkUser);
 
     const isIdExist = !!(rows as RowDataPacket[])[0]?.id;
-    console.log(isIdExist);
 
     let msg = '';
     if (isIdExist) {
@@ -29,7 +28,7 @@ export default defineEventHandler(async (e) => {
 
       await connection.execute(sql);
 
-      msg = '회원가입 완료';
+      msg = '회원가입이 완료되었습니다.';
     }
 
     // 연결 반환
@@ -44,7 +43,9 @@ export default defineEventHandler(async (e) => {
   } catch (error) {
     console.error(error);
     return {
-      res: {},
+      res: {
+        msg: '회원가입에 실패하였습니다.',
+      },
       status: 'bad',
     };
   }

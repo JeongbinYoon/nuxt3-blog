@@ -2,6 +2,10 @@ import bcrypt from 'bcrypt';
 import { RowDataPacket } from 'mysql2';
 import getMySQLConnection from '~/server/db/index';
 
+type Errors = {
+  msg: string;
+};
+
 export default defineEventHandler(async (e) => {
   const { id, pw } = await readBody(e);
   try {
@@ -20,11 +24,11 @@ export default defineEventHandler(async (e) => {
     if (user) {
       const isPwCorrect = await bcrypt.compare(pw, user.password);
       if (isPwCorrect) {
-        msg = '로그인 성공';
+        msg = '로그인에 성공하였습니다.';
       } else {
-        msg = '아이디 또는 패스워드가 틀렸습니다.';
+        throw { msg: '아이디 또는 패스워드가 틀렸습니다.' };
       }
-    } else msg = '아이디 또는 패스워드가 틀렸습니다.';
+    } else throw { msg: '아이디 또는 패스워드가 틀렸습니다.' };
 
     // 연결 반환
     connection.release();
@@ -38,7 +42,9 @@ export default defineEventHandler(async (e) => {
   } catch (error) {
     console.error(error);
     return {
-      res: {},
+      res: {
+        msg: error.msg,
+      },
       status: 'bad',
     };
   }
