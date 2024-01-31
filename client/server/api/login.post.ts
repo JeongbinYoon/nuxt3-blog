@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { RowDataPacket } from 'mysql2';
 import getMySQLConnection from '~/server/db/index';
 
@@ -8,6 +9,9 @@ type Errors = {
 
 export default defineEventHandler(async (e) => {
   const { id, pw } = await readBody(e);
+  const secretKey = process.env.JWT_SECRET_KEY;
+  let token = '';
+
   try {
     // 연결 풀에서 연결 가져오기
     const connection = await getMySQLConnection();
@@ -25,6 +29,8 @@ export default defineEventHandler(async (e) => {
       const isPwCorrect = await bcrypt.compare(pw, user.password);
       if (isPwCorrect) {
         msg = '로그인에 성공하였습니다.';
+        token = jwt.sign({ id }, secretKey, { expiresIn: 30 });
+        setCookie(e, 'authToken', token);
       } else {
         throw { msg: '아이디 또는 패스워드가 틀렸습니다.' };
       }
