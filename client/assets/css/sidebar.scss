@@ -1,11 +1,12 @@
 #sidebar {
+  display: flex;
+  flex-direction: column;
   width: $sidebar-width;
   min-height: (100vh);
   background-color: $color-background-level-2;
   padding: 30px 20px;
   .sidebar-content {
-    position: sticky;
-    top: calc(100px + $header-height);
+    margin-top: calc(100px + $header-height);
     > div + div {
       margin-top: 30px;
     }
@@ -52,5 +53,11 @@
         }
       }
     }
+  }
+  .logout-btn {
+    width: 30px;
+    margin: auto 0 0 auto;
+    background: none;
+    font-size: 18px;
   }
 }

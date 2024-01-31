@@ -10,5 +10,8 @@
       </div>
       <Category />
     </div>
+    <button class="logout-btn">
+      <font-awesome-icon icon="right-from-bracket" />
+    </button>
   </div>
 </template>
