@@ -4,7 +4,7 @@ export default async function useFetchApi(
   params?: Object,
   body?: Object
 ) {
-  const auth = useCookie('authToken');
+  const auth = useCookie('authentication');
 
   const { data, error, status } = await useFetch(url, {
     method,
@@ -14,6 +14,14 @@ export default async function useFetchApi(
       authentication: auth.value || '',
     },
   });
+
+  const loginYn = useCookie('isLogin');
+
+  // 스토어 생성
+  const authStore = useAuthStore();
+  // 반응형 객체로 변환
+  authStore.setIsLogin(loginYn.value === 'Y' ? true : false);
+  const { isLogin } = storeToRefs(authStore);
 
   if (status.value === 'success') return data.value;
   else return error;
