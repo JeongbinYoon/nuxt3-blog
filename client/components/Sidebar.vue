@@ -1,3 +1,8 @@
+<script lang="ts" setup>
+const authStore = useAuthStore();
+const { isLogin } = storeToRefs(authStore);
+</script>
+
 <template>
   <div id="sidebar">
     <div class="sidebar-content">
@@ -11,7 +16,7 @@
       <Category />
     </div>
     <ClientOnly>
-      <button class="logout-btn">
+      <button v-if="isLogin" class="logout-btn">
         <font-awesome-icon icon="right-from-bracket" />
       </button>
     </ClientOnly>

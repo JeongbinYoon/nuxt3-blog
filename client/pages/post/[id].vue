@@ -5,6 +5,9 @@ const { $emit } = useNuxtApp();
 
 const emit = defineEmits(['post-intersecting']);
 
+const authStore = useAuthStore();
+const { isLogin } = storeToRefs(authStore);
+
 const postId = ref(route.params.id);
 
 // 글 정보 불러오기
@@ -74,7 +77,7 @@ onMounted(() => {
     <div class="meta-info">
       <span class="created">{{ `${created.date} ${created.time}` }}</span>
       <ClientOnly>
-        <div class="meta-info-btns">
+        <div v-if="isLogin" class="meta-info-btns">
           <button @click="$router.push(`/write?postId=${route.params.id}`)">
             <font-awesome-icon icon="pen" />
           </button>

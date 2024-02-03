@@ -15,13 +15,14 @@ export default async function useFetchApi(
     },
   });
 
-  const loginYn = useCookie('isLogin');
+  if (process.client) {
+    const loginYn = useCookie('isLogin');
 
-  // 스토어 생성
-  const authStore = useAuthStore();
-  // 반응형 객체로 변환
-  authStore.setIsLogin(loginYn.value === 'Y' ? true : false);
-  const { isLogin } = storeToRefs(authStore);
+    // 스토어 생성
+    const authStore = useAuthStore();
+    // 반응형 객체로 변환
+    authStore.setIsLogin(loginYn.value === 'Y' ? true : false);
+  }
 
   if (status.value === 'success') return data.value;
   else return error;

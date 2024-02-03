@@ -1,5 +1,10 @@
+<script lang="ts" setup>
+const authStore = useAuthStore();
+const { isLogin } = storeToRefs(authStore);
+</script>
+
 <template>
-  <div id="floating">
+  <div v-if="isLogin" id="floating">
     <!-- 글 작성하기 -->
     <NuxtLink to="/write" class="floating-btn">
       <font-awesome-icon icon="pen-to-square" />
