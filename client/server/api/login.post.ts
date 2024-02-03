@@ -29,7 +29,7 @@ export default defineEventHandler(async (e) => {
       const isPwCorrect = await bcrypt.compare(pw, user.password);
       if (isPwCorrect) {
         msg = '로그인에 성공하였습니다.';
-        token = jwt.sign({ id }, secretKey, { expiresIn: 30 });
+        token = jwt.sign({ id }, secretKey, { expiresIn: 1800 });
         setCookie(e, 'authToken', token);
       } else {
         throw { msg: '아이디 또는 패스워드가 틀렸습니다.' };

@@ -1,11 +1,13 @@
-<script setup>
+<script lang="ts" setup>
+import type { TitleInterSect } from '~/types';
+
 const { $listen } = useNuxtApp();
 const route = useRoute();
 
 const theme = ref(true);
-const titleInfo = ref({});
+const titleInfo = ref<TitleInterSect>({ intersecting: false, postTitle: '' });
 
-$listen('title-intersecting', (v) => (titleInfo.value = v));
+$listen('title-intersecting', (v) => (titleInfo.value = v as TitleInterSect));
 </script>
 
 <template>
@@ -39,3 +41,4 @@ $listen('title-intersecting', (v) => (titleInfo.value = v));
 <style scoped>
 @import '~/assets/css/reset.scss';
 </style>
+~/types
