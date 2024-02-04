@@ -65,6 +65,15 @@ onMounted(() => {
   });
 
   observer.observe(titleRef.value);
+
+  onBeforeUnmount(() => {
+    const titleInfo = {
+      intersecting: false,
+      postTitle: '',
+    };
+    $emit('title-intersecting', titleInfo);
+    observer.disconnect();
+  });
 });
 </script>
 
