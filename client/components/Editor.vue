@@ -8,12 +8,20 @@
     />
   </div>
 </template>
+
 <script setup>
 import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import '@ckeditor/ckeditor5-build-classic/build/translations/ko';
+import { UploadAdapter } from './UploadAdapter';
 
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
+
+function uploadPlugin(editor) {
+  editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+    return new UploadAdapter(loader);
+  };
+}
 
 const editorConfig = ref({
   language: 'ko',
@@ -49,6 +57,7 @@ const editorConfig = ref({
     ],
     shouldNotGroupWhenFull: true,
   },
+  extraPlugins: [uploadPlugin],
 });
 
 const editorHtml = computed({
