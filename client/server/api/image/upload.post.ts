@@ -1,5 +1,3 @@
-import { ResultSetHeader } from 'mysql2';
-import getMySQLConnection from '~/server/db/index';
 import { v2 as cloudinary } from 'cloudinary';
 
 cloudinary.config({
@@ -10,49 +8,34 @@ cloudinary.config({
 
 export default defineEventHandler(async (e) => {
   try {
-    const file = await readBody(e);
-    // 연결 풀에서 연결 가져오기
-    // const connection = await getMySQLConnection();
+    const formData = await readMultipartFormData(e);
 
-    // await connection.execute<ResultSetHeader>(sql);
+    let fileData = null;
+    if (formData?.length) fileData = formData[0];
+    console.log(fileData);
 
-    // Use the uploaded file's name as the asset's public ID and
-    // allow overwriting the asset with new versions
-    // const imagePath =
-    //   'https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg';
-    // const options = {
-    //   use_filename: true,
-    //   unique_filename: false,
-    //   overwrite: true,
-    // };
-
-    try {
-      // Upload the image
-      const result = await cloudinary.uploader.upload(file);
-      //   const result = await cloudinary.uploader.upload(imagePath, options);
-      console.log(result);
-      return result.public_id;
-    } catch (error) {
-      console.error(error);
-    }
-
-    // cloudinary.uploader.upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg",
-    // { public_id: "olympic_flag" },
-    // function(error, result) {console.log(result); });
-
-    // 연결 반환
-    // connection.release();
+    new Promise((resolve) => {
+      cloudinary.uploader
+        .upload_stream((error, uploadResult) => {
+          return resolve(uploadResult);
+        })
+        .end(fileData.data);
+    }).then((uploadResult) => {
+      console.log(
+        `Buffer upload_stream wth promise success - ${uploadResult.public_id}`
+      );
+    });
 
     return {
       res: {
-        msg: '카테고리를 추가하였습니다.',
+        msg: '이미지 업로드 완료',
       },
       status: 'ok',
     };
   } catch (error) {
     console.error(error);
     return {
-      msg: '카테고리를 추가하지 못했습니다.',
+      msg: '이미지 업로드 실패',
       status: 'bad',
     };
   }
