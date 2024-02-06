@@ -7,7 +7,11 @@ export default defineNuxtConfig({
     '@fortawesome/fontawesome-svg-core/styles.css',
   ],
   modules: ['@pinia/nuxt'],
+  // modules: ['@pinia/nuxt', '@nuxtjs/cloudinary'],
   pinia: {
     storesDirs: ['./stores/**'],
+  },
+  cloudinary: {
+    cloudName: 'fesfese4324',
   },
 });

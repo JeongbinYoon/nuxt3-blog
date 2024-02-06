@@ -44,8 +44,20 @@ export class UploadAdapter {
   }
 
   _sendRequest(file) {
-    const data = new FormData();
-    data.append('upload', file);
-    this.xhr.send(data);
+    // const data = new FormData();
+    // data.append('upload', file);
+    // this.xhr.send(data);
+
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      const base64data = reader.result.replace(' ', ''); // base64 데이터 추출
+      const formData = new FormData();
+      formData.append('file', base64data);
+
+      this.xhr.send(formData);
+    };
+
+    reader.readAsDataURL(file);
   }
 }
