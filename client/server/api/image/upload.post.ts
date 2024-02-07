@@ -7,36 +7,25 @@ cloudinary.config({
 });
 
 export default defineEventHandler(async (e) => {
-  try {
-    const formData = await readMultipartFormData(e);
+  const formData = await readMultipartFormData(e);
 
-    let fileData = null;
-    if (formData?.length) fileData = formData[0];
-    console.log(fileData);
+  let fileData = null;
+  if (formData?.length) fileData = formData[0];
 
-    new Promise((resolve) => {
-      cloudinary.uploader
-        .upload_stream((error, uploadResult) => {
-          return resolve(uploadResult);
-        })
-        .end(fileData.data);
-    }).then((uploadResult) => {
-      console.log(
-        `Buffer upload_stream wth promise success - ${uploadResult.public_id}`
-      );
-    });
+  const result = await new Promise((resolve) => {
+    cloudinary.uploader
+      .upload_stream((error, uploadResult) => {
+        return resolve(uploadResult);
+      })
+      .end(fileData.data);
+  }).then((uploadResult) => {
+    console.log(
+      `Buffer upload_stream wth promise success - ${uploadResult.public_id}`
+    );
 
-    return {
-      res: {
-        msg: '이미지 업로드 완료',
-      },
-      status: 'ok',
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      msg: '이미지 업로드 실패',
-      status: 'bad',
-    };
-  }
+    return uploadResult;
+  });
+  return {
+    url: result.url,
+  };
 });
