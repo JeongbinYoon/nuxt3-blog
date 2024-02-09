@@ -80,7 +80,15 @@ onMounted(() => {
 const isShareClicked = ref(false);
 
 // 링크 공유
-const shareLink = () => {};
+const shareLink = async () => {
+  try {
+    await window.navigator.clipboard.writeText(window.location.href);
+    alert('링크가 복사되었습니다.');
+  } catch (e) {
+    console.error(e);
+    alert('클립보드 복사에 실패했습니다.');
+  }
+};
 </script>
 
 <template>
