@@ -75,6 +75,12 @@ onMounted(() => {
     observer.disconnect();
   });
 });
+
+// 공유하기
+const isShareClicked = ref(false);
+
+// 링크 공유
+const shareLink = () => {};
 </script>
 
 <template>
@@ -103,18 +109,37 @@ onMounted(() => {
     <!-- 공감, 공유 -->
     <ClientOnly>
       <div class="icons">
-        <button
-          class="likes"
-          :class="{ selected: isLiked }"
-          @click.stop="toggleLike"
-        >
-          <font-awesome-icon icon="heart" />
-          <span class="likes-count">{{ likesCount }}</span>
-        </button>
+        <div>
+          <button
+            class="likes"
+            :class="{ selected: isLiked }"
+            @click.stop="toggleLike"
+          >
+            <font-awesome-icon icon="heart" />
+            <span class="likes-count">{{ likesCount }}</span>
+          </button>
+        </div>
 
-        <button class="share">
-          <font-awesome-icon icon="share-nodes" />
-        </button>
+        <div class="share">
+          <button
+            @click="isShareClicked = !isShareClicked"
+            :class="{ active: isShareClicked }"
+          >
+            <font-awesome-icon icon="share-nodes" />
+          </button>
+
+          <div v-if="isShareClicked" class="share-items">
+            <button @click="shareLink">
+              <font-awesome-icon icon="paperclip" />
+            </button>
+            <button @click="shareLink">
+              <font-awesome-icon icon="paperclip" />
+            </button>
+            <button @click="shareLink">
+              <font-awesome-icon icon="paperclip" />
+            </button>
+          </div>
+        </div>
       </div>
     </ClientOnly>
   </div>
