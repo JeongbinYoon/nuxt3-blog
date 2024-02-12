@@ -42,6 +42,15 @@ const onPublish = async () => {
     router.push(`/post/${id}`);
   }
 };
+
+const thumbnailInfo = ref({ src: '', name: '' });
+const uploadThumbnail = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    thumbnailInfo.value.src = URL.createObjectURL(file);
+    thumbnailInfo.value.name = file.name;
+  }
+};
 </script>
 
 <template>
@@ -71,9 +80,22 @@ const onPublish = async () => {
 
       <div>
         <p>미리보기</p>
-        <div class="thumbnail t-gray-light">
-          <font-awesome-icon icon="plus" />
-        </div>
+        <label for="thumbnail">
+          <div class="thumbnail t-gray-light">
+            <template v-if="!thumbnailInfo.src">
+              <font-awesome-icon icon="plus" />
+            </template>
+            <template v-else>
+              <img :src="thumbnailInfo.src" :alt="thumbnailInfo.name" />
+            </template>
+          </div>
+        </label>
+        <input
+          v-show="false"
+          type="file"
+          id="thumbnail"
+          @change="uploadThumbnail"
+        />
       </div>
 
       <div>
