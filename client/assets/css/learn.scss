@@ -1,0 +1,51 @@
+#stored-xss {
+  padding: 20px;
+  * {
+    color: #333;
+  }
+  h1 {
+    color: #fff;
+  }
+  nav {
+    li {
+      margin-top: 10px;
+      a {
+        color: #fff;
+      }
+    }
+  }
+  > div {
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: floralwhite;
+    gap: 30px;
+
+    > ul {
+      width: 400px;
+      list-style: none;
+      padding-left: 0;
+      li {
+        padding: 10px;
+        background-color: burlywood;
+        margin-top: 5px;
+      }
+    }
+    > div {
+      display: flex;
+      flex-direction: column;
+      width: 500px;
+      gap: 10px;
+      input {
+        height: 40px;
+      }
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: burlywood;
+    }
+  }
+}
