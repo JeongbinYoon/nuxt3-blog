@@ -29,14 +29,16 @@ if (res) result.value = res;
       <input v-model="keyword" type="text" id="search" />
 
       <button @click="search">검색</button>
-      <div>
-        <span>검색어: </span>
-        <p v-html="result"></p>
-      </div>
-      <div>
-        <span>검색결과: </span>
-        <p>...</p>
-      </div>
+      <template v-if="result">
+        <div>
+          <span>검색어: </span>
+          <p v-html="result"></p>
+        </div>
+        <div>
+          <span>검색결과: </span>
+          <p>...</p>
+        </div>
+      </template>
     </div>
   </div>
 </template>
