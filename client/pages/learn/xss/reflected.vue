@@ -8,9 +8,16 @@ const router = useRouter();
 
 const keyword = ref('');
 
-const search = () => {
+const result = ref('');
+const search = async () => {
   window.open(`/learn/xss/reflected?keyword=${keyword.value}`);
 };
+
+const { res } = await useFetchApi('/api/xss/search', 'get', {
+  keyword: route.query.keyword,
+});
+
+if (res) result.value = res;
 </script>
 
 <template>
@@ -24,7 +31,11 @@ const search = () => {
       <button @click="search">검색</button>
       <div>
         <span>검색어: </span>
-        <p v-html="route.query.keyword"></p>
+        <p v-html="result"></p>
+      </div>
+      <div>
+        <span>검색결과: </span>
+        <p>...</p>
       </div>
     </div>
   </div>

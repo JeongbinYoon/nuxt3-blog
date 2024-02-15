@@ -23,8 +23,8 @@ await getPost();
     <XssNav />
     <div>
       <div v-if="postData">
-        <h2 for="title">{{ postData.title }}</h2>
-        <p v-html="postData.contents"></p>
+        <h2>{{ postData.title }}</h2>
+        <div class="contents" v-html="postData.contents"></div>
       </div>
     </div>
   </div>

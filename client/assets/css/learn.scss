@@ -80,9 +80,14 @@
       margin-left: 10px;
     }
 
+    button {
+      margin-bottom: 20px;
+    }
+
     > div {
       display: flex;
       align-items: center;
+      height: 30px;
     }
   }
 }
