@@ -3,38 +3,32 @@ definePageMeta({
   layout: 'empty',
 });
 
-const title = ref('');
-const contents = ref('');
+const route = useRoute();
+const router = useRouter();
 
-const submit = () => {
-  console.log('title', title.value);
-  console.log('contents', contents.value);
-};
+const keyword = ref('');
 </script>
 
 <template>
-  <div id="stored-xss">
+  <div id="reflected-xss">
     <h1>Reflected XSS</h1>
     <XssNav />
-
     <div>
-      <ul>
-        <li>asdas</li>
-        <li>asdas</li>
-      </ul>
+      <label for="search">검색</label>
+      <input v-model="keyword" type="text" id="search" />
+      <button
+        @click="
+          router.push({
+            path: '/learn/xss/reflected',
+            query: { keyword },
+          })
+        "
+      >
+        검색
+      </button>
       <div>
-        <label for="title">제목</label>
-        <input v-bind="title" type="text" id="title" />
-
-        <label for="contents">내용</label>
-        <textarea
-          v-bind="contents"
-          id="contents"
-          cols="30"
-          rows="10"
-        ></textarea>
-
-        <button @click="submit">저장</button>
+        <span>검색어: </span>
+        <p v-html="route.query.keyword"></p>
       </div>
     </div>
   </div>
