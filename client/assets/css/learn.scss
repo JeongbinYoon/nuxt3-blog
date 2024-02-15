@@ -1,11 +1,6 @@
 #stored-xss {
   padding: 20px;
-  * {
-    color: #333;
-  }
-  h1 {
-    color: #fff;
-  }
+
   nav {
     li {
       margin-top: 10px;
@@ -15,6 +10,9 @@
     }
   }
   > div {
+    * {
+      color: #333;
+    }
     display: flex;
     justify-content: center;
     width: fit-content;
@@ -61,6 +59,14 @@
 }
 #reflected-xss {
   padding: 20px;
+  nav {
+    li {
+      margin-top: 10px;
+      a {
+        color: #fff;
+      }
+    }
+  }
   > div {
     width: 500px;
     margin: 0 auto;

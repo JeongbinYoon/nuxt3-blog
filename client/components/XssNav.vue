@@ -7,9 +7,9 @@
       <li>
         <NuxtLink to="/learn/xss/stored">Stored XSS</NuxtLink>
       </li>
-      <li>
+      <!-- <li>
         <NuxtLink to="/learn/xss/dom-based">Dom-based XSS</NuxtLink>
-      </li>
+      </li> -->
     </ul>
   </nav>
 </template>

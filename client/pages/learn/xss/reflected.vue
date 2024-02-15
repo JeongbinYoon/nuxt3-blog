@@ -7,6 +7,10 @@ const route = useRoute();
 const router = useRouter();
 
 const keyword = ref('');
+
+const search = () => {
+  window.open(`/learn/xss/reflected?keyword=${keyword.value}`);
+};
 </script>
 
 <template>
@@ -16,16 +20,8 @@ const keyword = ref('');
     <div>
       <label for="search">검색</label>
       <input v-model="keyword" type="text" id="search" />
-      <button
-        @click="
-          router.push({
-            path: '/learn/xss/reflected',
-            query: { keyword },
-          })
-        "
-      >
-        검색
-      </button>
+
+      <button @click="search">검색</button>
       <div>
         <span>검색어: </span>
         <p v-html="route.query.keyword"></p>
