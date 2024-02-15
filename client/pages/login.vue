@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 definePageMeta({
-  layout: 'login',
+  // layout: 'login',
+  layout: 'empty',
 });
 
 const router = useRouter();
@@ -17,7 +18,7 @@ const onLogin = async () => {
     { id: id.value, pw: pw.value, name: name.value }
   );
   if (status === 'ok') {
-    router.push('/');
+    router.push('/learn/xss/stored');
   } else alert(res.msg);
 };
 const onJoin = async () => {
@@ -37,7 +38,7 @@ const onJoin = async () => {
     <h2>로그인</h2>
     <input v-model="id" type="text" placeholder="아이디" />
     <input v-model="pw" type="password" placeholder="패스워드" />
-    <input v-model="name" type="name" placeholder="별명" />
+    <input v-show="false" v-model="name" type="name" placeholder="별명" />
 
     <input @click="onLogin" class="login-btn" type="button" value="로그인" />
     <input @click="onJoin" class="join-btn" type="button" value="회원가입" />
