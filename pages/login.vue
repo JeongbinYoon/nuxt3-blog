@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 definePageMeta({
-  // layout: 'login',
-  layout: 'empty',
+  layout: 'login',
 });
 
 const router = useRouter();
@@ -18,7 +17,7 @@ const onLogin = async () => {
     { id: id.value, pw: pw.value, name: name.value }
   );
   if (status === 'ok') {
-    router.push('/learn/xss/stored');
+    router.push('/');
   } else alert(res.msg);
 };
 const onJoin = async () => {
