@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { TitleInterSect } from '~/types';
+import type { TitleIntersect } from '~/types';
 
 const { $listen } = useNuxtApp();
 const authStore = useAuthStore();
 const { isLogin } = storeToRefs(authStore);
 
-const titleInfo = ref<TitleInterSect>({ intersecting: false });
-$listen('title-intersecting', (v) => (titleInfo.value = v as TitleInterSect));
+const titleInfo = ref<TitleIntersect>({ intersecting: false });
+$listen('title-intersecting', (v) => (titleInfo.value = v as TitleIntersect));
 
 const scrollUp = () => {
   scroll({ top: 0, left: 0, behavior: 'smooth' });

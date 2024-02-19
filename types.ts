@@ -1,4 +1,4 @@
-export type TitleInterSect = {
+export type TitleIntersect = {
   intersecting: boolean;
   postTitle?: string;
 };
