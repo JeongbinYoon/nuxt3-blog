@@ -14,9 +14,17 @@ export default defineEventHandler(async (e) => {
 
   const result = await new Promise((resolve) => {
     cloudinary.uploader
-      .upload_stream((error, uploadResult) => {
-        return resolve(uploadResult);
-      })
+      .upload_stream(
+        {
+          transformation: {
+            width: 600,
+            crop: 'scale',
+          },
+        },
+        (error, uploadResult) => {
+          return resolve(uploadResult);
+        }
+      )
       .end(fileData.data);
   }).then((uploadResult) => {
     console.log(

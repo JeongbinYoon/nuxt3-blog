@@ -14,7 +14,6 @@ const router = useRouter();
 
 const isPublic = ref(true);
 const preview = ref(props.postInfo.preview || '');
-const thumbnail = ref('');
 
 // 게시하기
 const onPublish = async () => {
@@ -46,16 +45,13 @@ const onPublish = async () => {
 };
 
 // 썸네일 등록
-const thumbnailInfo = ref({ src: '', name: '' });
+const thumbnail = ref('');
 const uploadThumbnail = async (e) => {
   const file = e.target.files[0];
   const formData = new FormData();
   formData.append('file', file);
 
   if (file && formData) {
-    thumbnailInfo.value.src = URL.createObjectURL(file);
-    thumbnailInfo.value.name = file.name;
-
     const { url } = await useFetchApi(
       '/api/image/upload',
       'post',
@@ -96,11 +92,11 @@ const uploadThumbnail = async (e) => {
         <p>미리보기</p>
         <label for="thumbnail">
           <div class="thumbnail t-gray-light">
-            <template v-if="!thumbnailInfo.src">
+            <template v-if="!thumbnail">
               <font-awesome-icon icon="plus" />
             </template>
             <template v-else>
-              <img :src="thumbnailInfo.src" :alt="thumbnailInfo.name" />
+              <img :src="thumbnail" />
             </template>
           </div>
         </label>
