@@ -9,7 +9,7 @@ export default defineEventHandler(async (e) => {
 
     const sql_where = `WHERE posts.id=${id};`;
     const sql = `
-        SELECT posts.id as postId, title, category, contents, preview, account, name, likes, created 
+        SELECT posts.id as postId, title, category, contents, preview, thumbnail, account, name, likes, created 
         FROM posts 
         LEFT JOIN user 
         ON posts.author=user.id

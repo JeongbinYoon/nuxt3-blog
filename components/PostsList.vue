@@ -22,7 +22,9 @@ const getCreatedAt = (created: '') => {
           <span class="created">{{ getCreatedAt(post.created) }}</span>
         </div>
       </div>
-      <div>이미지</div>
+      <div v-if="post.thumbnail" class="thumbnail-img">
+        <img :src="post.thumbnail" alt="썸네일" />
+      </div>
     </li>
   </ul>
 </template>
@@ -69,6 +71,17 @@ const getCreatedAt = (created: '') => {
   }
   span + span {
     margin-left: 15px;
+  }
+}
+
+.thumbnail-img {
+  width: 300px;
+  max-height: 200px;
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 </style>

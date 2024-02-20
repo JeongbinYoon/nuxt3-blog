@@ -9,7 +9,7 @@ export default defineEventHandler(async (e) => {
       categoryId && categoryId !== 'all' ? `WHERE category=${categoryId}` : '';
 
     let sql = `
-        SELECT posts.id AS postId, title, preview, category, created, child_categories.name AS categoryName, parent_categories.name AS groupName
+        SELECT posts.id AS postId, title, preview, category, thumbnail, created, child_categories.name AS categoryName, parent_categories.name AS groupName
         FROM posts
         LEFT JOIN child_categories ON posts.category = child_categories.id
         LEFT JOIN parent_categories ON parent_id = parent_categories.id

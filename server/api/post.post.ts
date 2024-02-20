@@ -6,6 +6,7 @@ export default defineEventHandler(async (e) => {
     title = '',
     contents = '',
     preview = '',
+    thumbnail = '',
     author = '',
     category = '',
   } = await readBody(e);
@@ -21,8 +22,8 @@ export default defineEventHandler(async (e) => {
 
     const sql = `
             INSERT INTO posts 
-            (title, contents, preview, author, category, created) 
-            VALUES ('${title}', '${contents}', '${preview}', '${author}', '${category}' ,NOW());
+            (title, contents, preview, thumbnail, author, category, created) 
+            VALUES ('${title}', '${contents}', '${preview}', '${thumbnail}', '${author}', '${category}' ,NOW());
       `;
 
     const [data] = await connection.execute<ResultSetHeader>(sql);

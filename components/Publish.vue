@@ -14,6 +14,7 @@ const router = useRouter();
 
 const isPublic = ref(true);
 const preview = ref(props.postInfo.preview || '');
+const thumbnail = ref('');
 
 // 게시하기
 const onPublish = async () => {
@@ -23,6 +24,7 @@ const onPublish = async () => {
     title: props.postInfo.title,
     contents: props.postInfo.contents,
     preview,
+    thumbnail,
     author: '2',
     category: props.postInfo.category,
   };
@@ -54,7 +56,13 @@ const uploadThumbnail = async (e) => {
     thumbnailInfo.value.src = URL.createObjectURL(file);
     thumbnailInfo.value.name = file.name;
 
-    await useFetchApi('/api/image/upload', 'post', {}, formData);
+    const { url } = await useFetchApi(
+      '/api/image/upload',
+      'post',
+      {},
+      formData
+    );
+    if (url) thumbnail.value = url;
   }
 };
 </script>
