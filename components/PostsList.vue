@@ -22,9 +22,15 @@ const getCreatedAt = (created: '') => {
           <span class="created">{{ getCreatedAt(post.created) }}</span>
         </div>
       </div>
-      <div v-if="post.thumbnail" class="thumbnail-img">
+
+      <!-- 썸네일 -->
+      <NuxtLink
+        v-if="post.thumbnail"
+        :to="`/post/${post.postId}`"
+        class="thumbnail-img"
+      >
         <img :src="post.thumbnail" alt="썸네일" />
-      </div>
+      </NuxtLink>
     </li>
   </ul>
 </template>
