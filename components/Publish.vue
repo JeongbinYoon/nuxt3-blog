@@ -43,12 +43,18 @@ const onPublish = async () => {
   }
 };
 
+// 썸네일 등록
 const thumbnailInfo = ref({ src: '', name: '' });
-const uploadThumbnail = (e) => {
+const uploadThumbnail = async (e) => {
   const file = e.target.files[0];
-  if (file) {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  if (file && formData) {
     thumbnailInfo.value.src = URL.createObjectURL(file);
     thumbnailInfo.value.name = file.name;
+
+    await useFetchApi('/api/image/upload', 'post', {}, formData);
   }
 };
 </script>
