@@ -13,7 +13,8 @@ export default defineEventHandler(async (e) => {
         FROM posts
         LEFT JOIN child_categories ON posts.category = child_categories.id
         LEFT JOIN parent_categories ON parent_id = parent_categories.id
-        ${sql_where};
+        ${sql_where}
+        ORDER BY created DESC;
       `;
 
     const [rows] = await connection.execute(sql);

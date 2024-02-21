@@ -7,6 +7,7 @@ export default defineEventHandler(async (e) => {
     title = '',
     contents = '',
     preview = '',
+    thumbnail = '',
     author = '',
     category = '',
   } = await readBody(e);
@@ -23,7 +24,7 @@ export default defineEventHandler(async (e) => {
 
     const sql = `
             UPDATE posts 
-            SET title='${title}', contents='${contents}', preview='${preview}',
+            SET title='${title}', contents='${contents}', preview='${preview}', thumbnail='${thumbnail}',
             author='${author}', category='${category}', created=NOW()
             WHERE posts.id=${id};
       `;

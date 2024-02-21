@@ -82,7 +82,9 @@ const getCreatedAt = (created: '') => {
 
 .thumbnail-img {
   width: 300px;
+  min-width: 300px;
   max-height: 200px;
+  margin-left: 50px;
   overflow: hidden;
   img {
     width: 100%;
