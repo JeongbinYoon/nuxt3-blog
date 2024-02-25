@@ -18,7 +18,11 @@ const { res: postData } = await useFetchApi('/api/post', 'get', {
 // 날짜
 const created = ref({});
 created.value.date = postData.created.split('T')[0];
-created.value.time = postData.created.split('T')[1].split('.')[0];
+created.value.time =
+  postData.created
+    .split('T')[1]
+    .match(/\d+:\d+/g)[0]
+    .replace(/:/g, '시 ') + '분';
 
 //  글 삭제
 const deletePost = async () => {
