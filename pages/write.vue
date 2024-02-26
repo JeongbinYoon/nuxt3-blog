@@ -3,6 +3,15 @@ import Editor from '~/components/editor';
 definePageMeta({
   layout: 'write',
 });
+const router = useRouter();
+
+onBeforeRouteLeave((to, from, next) => {
+  if (confirm('이 페이지를 떠나시겠습니까?')) {
+    next();
+  } else {
+    next(false);
+  }
+});
 
 const popVisible = ref({
   visible: false,
@@ -105,6 +114,9 @@ const onComplete = () => {
       </div>
 
       <div class="btn-group">
+        <button @click="router.push('/')" class="btn btn-white">
+          뒤로가기
+        </button>
         <button @click="onTmpStorage" class="btn btn-white">임시저장</button>
         <button @click="onComplete" class="btn btn-primary">완료</button>
       </div>
