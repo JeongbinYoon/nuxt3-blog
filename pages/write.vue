@@ -13,6 +13,22 @@ onBeforeRouteLeave((to, from, next) => {
   }
 });
 
+// 새로고침 및 페이지 이동 방지
+const handleBeforeunload = (e) => {
+  e.preventDefault();
+  e.returnValue = '';
+
+  return '';
+};
+
+onMounted(() => {
+  window.addEventListener('beforeunload', handleBeforeunload);
+});
+
+onBeforeMount(() => {
+  window.removeEventListener('beforeunload', handleBeforeunload);
+});
+
 const popVisible = ref({
   visible: false,
 });
