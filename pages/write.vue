@@ -3,6 +3,7 @@ import Editor from '~/components/editor';
 definePageMeta({
   layout: 'write',
 });
+const route = useRoute();
 const router = useRouter();
 
 onBeforeRouteLeave((to, from, next) => {
@@ -15,10 +16,12 @@ onBeforeRouteLeave((to, from, next) => {
 
 // 새로고침 및 페이지 이동 방지
 const handleBeforeunload = (e) => {
-  e.preventDefault();
-  e.returnValue = '';
+  if (route.path === '/write') {
+    e.preventDefault();
+    e.returnValue = '';
 
-  return '';
+    return '';
+  }
 };
 
 onMounted(() => {
